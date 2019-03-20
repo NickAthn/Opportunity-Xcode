@@ -24,6 +24,7 @@ import Foundation
 //"Do [...]."
 //)
 
+let true = true
 
 
 // Completion of user-entered code:
@@ -31,7 +32,18 @@ import Foundation
 
 
 //#-end-hidden-code
-let str = "Hello, playground"
+/*:
+ Opportunity also known as “Oppy” was launched into the space on July, 2003 and began its big 5 month and 18 days journay.
+ 
+ At January, 2004 Oppy touched the surface of Mars in the Eagle crater and for the first time she opened her eyes.
+ 
+ Now its your turn to take control of Oppy and finish the story….
+
+ First open her eyes
+ */
+//#-code-completion(everything, hide)
+//#-code-completion(everything, show, false, true, bool)
+let eyeOpen = /*#-editable-code*/<#T##false##Bool#>/*#-end-editable-code*/
 
 
 

@@ -20,30 +20,6 @@ public class LiveViewController_1_1: LiveViewController {
         scnView.scene = scnStarScene
         scnView.allowsCameraControl = false
         scnView.autoenablesDefaultLighting = true
-        showMars()
-//        var geometry:SCNGeometry
-//        geometry = SCNCylinder(radius: 0.3, height: 2.5)
-//
-//        let color = UIColor.red
-//        geometry.materials.first?.diffuse.contents = color
-//        let geometryNode = SCNNode(geometry: geometry)
-//        geometryNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-
-//        let trailEmitter = createTrail(color: color, geometry: gemomrty)
-//        geometryNode.addParticleSystem(trailEmitter)
-        
-//        let exp = SCNParticleSystem(named: "Particles.scnp", inDirectory: nil)!
-//        exp.loops = true
-//
-//        var particleEmitterNode = SCNNode()
-//        particleEmitterNode.position = SCNVector3(0, 0, 0)
-//
-//        scnScene.rootNode.addChildNode(particleEmitterNode)
-//        particleEmitterNode.addParticleSystem(exp)
-        //scnScene.addParticleSystem(exp, transform: SCNMatrix4MakeRotation(0, 0, 0, 0))
-        
-        //scnScene.rootNode.addChildNode(exp)
-
     }
     
     override public var shouldAutorotate: Bool {
@@ -62,25 +38,14 @@ public class LiveViewController_1_1: LiveViewController {
         }
     }
     
-    func createTrail(color: UIColor, geometry: SCNGeometry) -> SCNParticleSystem {
-        // 2
-        let trail = SCNParticleSystem(named: "Trail.scnp", inDirectory: nil)!
-        // 3
-        trail.particleColor = color
-        // 4
-        trail.emitterShape = geometry
-        // 5
-        return trail
-    }
-    
     func showMars(){
         let scnView = self.view as! SCNView
         let mars = scnMarsScene.rootNode.childNode(withName: "planet", recursively: true)!
+        scnMarsScene.rootNode.childNode(withName: "planet", recursively: true)!.isHidden = false
         scnView.scene = scnMarsScene
-        
         // animate the 3d object
         //mars.runAction(SCNAction.fadeIn(duration: 5)) {
-            mars.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 1, y: 0, z: 0, duration: 10)))
+            mars.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 1, z: 0, duration: 10)))
         //}
         
         scnView.allowsCameraControl = true

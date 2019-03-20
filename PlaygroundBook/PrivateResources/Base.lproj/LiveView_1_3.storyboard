@@ -18,24 +18,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LiveView_1_3" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h6a-7e-CMz">
-                                <rect key="frame" x="139.5" y="323" width="96" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eqU-7s-JYI">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <mutableString key="text">Last login: Sat Mar 16 12:29:18 on ttys000
+➜  ~ ping Opportunity
+PING Opportunity: 56 data bytes
+
+Request Timed Out.
+Request Timed Out.
+Request Timed Out.
+Request Timed Out.
+
+--- Opportunity ping statistics ---
+4 packets transmitted, 0 packets received, 100.0% packet loss
+round-trip min/avg/max/stddev = 0/0/0/0 ms
+
+➜  ~ </mutableString>
+                                <color key="textColor" red="0.45009386540000001" green="0.98132258650000004" blue="0.4743030667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.12984204290000001" green="0.12984612579999999" blue="0.12984395030000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="h6a-7e-CMz" firstAttribute="centerX" secondItem="Rh2-0a-zph" secondAttribute="centerX" id="DgE-dK-YaV"/>
-                            <constraint firstItem="h6a-7e-CMz" firstAttribute="centerY" secondItem="Rh2-0a-zph" secondAttribute="centerY" id="rsb-9d-7m1"/>
+                            <constraint firstItem="qaR-nP-dw0" firstAttribute="trailing" secondItem="eqU-7s-JYI" secondAttribute="trailing" id="JEn-SA-O8x"/>
+                            <constraint firstItem="eqU-7s-JYI" firstAttribute="leading" secondItem="qaR-nP-dw0" secondAttribute="leading" id="daa-nh-4gH"/>
+                            <constraint firstItem="eqU-7s-JYI" firstAttribute="top" secondItem="qaR-nP-dw0" secondAttribute="top" id="hAa-HE-x2P"/>
+                            <constraint firstItem="qaR-nP-dw0" firstAttribute="bottom" secondItem="eqU-7s-JYI" secondAttribute="bottom" id="vOG-hO-BOZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qaR-nP-dw0"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uvi-wC-fap" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-247" y="96"/>
+            <point key="canvasLocation" x="-247.19999999999999" y="95.802098950524751"/>
         </scene>
     </scenes>
 </document>
