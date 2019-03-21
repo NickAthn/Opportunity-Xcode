@@ -10,6 +10,8 @@ import UIKit
 
 import SpriteKit
 import GameplayKit
+import AudioToolbox
+
 
 public enum Side: Int {
     case left = -300
@@ -23,32 +25,39 @@ public enum Move: Int {
 }
 
 public class GameScene: SKScene {
+    // Background Image
     var background = SKSpriteNode(imageNamed: "MarsMap")
     
+    // Rover and its Properties
     var rover = SKSpriteNode()
-    
+
     var roverMoveToSide: Move = Move.stay
     var roverSide: Side = Side.middle
     
     var canMove = false
     
     var centerPoint : CGFloat!
-    var score = 0
-
+    
     let roverMinimumX :CGFloat = -300
     let roverMaximumX : CGFloat = 300
 
+    
     var countDown = 1
     var stopEverything = true
-    var scoreText = SKLabelNode()
     
-    override public func sceneDidLoad() {
-        print("test")
-    }
+    // Score Label
+    var scoreLabel = SKLabelNode()
+    var score = 0
+
+    // Lives Label
+    let energyLabel = SKLabelNode()
+    var energy = 100
     
+    let gameTime = 60
     override public func didMove(to view: SKView) {
         //background.zPosition = 0
         background.position = CGPoint(x: 0, y: 0 )
+        
         //scene?.backgroundColor = UIColor(patternImage: UIImage(named: "MarsMap")!)
         addChild(background)
 
@@ -57,23 +66,52 @@ public class GameScene: SKScene {
         physicsWorld.contactDelegate = self
         Timer.scheduledTimer(timeInterval: TimeInterval(0.1), target: self, selector: #selector(GameScene.createRoadStrip), userInfo: nil, repeats: true)
         Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
-        Timer.scheduledTimer(timeInterval: TimeInterval(Helper().randomBetweenTwoNumbers(firstNumber: 0.8, secondNumber: 1.8)), target: self, selector: #selector(GameScene.traffic), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: TimeInterval(Helper().randomBetweenTwoNumbers(firstNumber: 1, secondNumber: 1.8)), target: self, selector: #selector(GameScene.traffic), userInfo: nil, repeats: true)
         Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(GameScene.removeItems), userInfo: nil, repeats: true)
+        
         let deadTime = DispatchTime.now() + 1
         DispatchQueue.main.asyncAfter(deadline: deadTime) {
-            Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.increaseScore), userInfo: nil, repeats: true)
+            Timer.scheduledTimer(timeInterval: TimeInterval(self.gameTime/15), target: self, selector: #selector(GameScene.increaseScore), userInfo: nil, repeats: true)
+            Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(GameScene.loseEnergy), userInfo: nil, repeats: true)
+
         }
     }
     
+    // MARK: - Collision Logic
     public func didBegin(_ contact: SKPhysicsContact) {
-        var firstBody = SKPhysicsBody()
+        var bodyToRemove = SKPhysicsBody()
         print("touch")
+        UIDevice.vibrate()
+        
         if contact.bodyA.node?.name == "rover"{
-            firstBody = contact.bodyA
+            if contact.bodyB.node?.name == "energyOrb" {
+                bodyToRemove = contact.bodyB
+                addEnergy()
+            } else {
+                
+                bodyToRemove = contact.bodyA
+                loseEnergyWith(amount: 10)
+                if energy == 0 {
+                    bodyToRemove = contact.bodyA
+                } else {
+                    bodyToRemove = contact.bodyB
+                }
+            }
         }else{
-            firstBody = contact.bodyB
+            if contact.bodyA.node?.name == "energyOrb" {
+                bodyToRemove = contact.bodyA
+                addEnergy()
+            } else {
+                
+                loseEnergyWith(amount: 10)
+                if energy == 0 {
+                    bodyToRemove = contact.bodyB
+                } else {
+                    bodyToRemove = contact.bodyA
+                }
+            }
         }
-        firstBody.node?.removeFromParent()
+        bodyToRemove.node?.removeFromParent()
         afterCollision()
     }
     // TODO: - FINISH THIS
@@ -117,21 +155,21 @@ public class GameScene: SKScene {
                 // Do Nothing
             } else if roverSide == .middle {
                 roverSide = .left
-                rover.run(SKAction.moveBy(x: self.size.width / 3, y: 0, duration: 0.2))
+                rover.run(SKAction.moveBy(x: self.size.width / 3, y: 0, duration: 0.1))
                 //rover.position.x -= -300
             } else if roverSide == .right {
                 roverSide = .middle
-                rover.run(SKAction.moveBy(x: self.size.width / 3, y: 0, duration: 0.2))
+                rover.run(SKAction.moveBy(x: self.size.width / 3, y: 0, duration: 0.1))
                 //rover.position.x -= -300
             }
         }else if side == .right {
             if roverSide == .left {
                 roverSide = .middle
-                rover.run(SKAction.moveBy(x: self.size.width / -3, y: 0, duration: 0.2))
+                rover.run(SKAction.moveBy(x: self.size.width / -3, y: 0, duration: 0.1))
                 //rover.position.x -= 300
             } else if roverSide == .middle {
                 roverSide = .right
-                rover.run(SKAction.moveBy(x: self.size.width / -3, y: 0, duration: 0.2))
+                rover.run(SKAction.moveBy(x: self.size.width / -3, y: 0, duration: 0.1))
                 //rover.position.x -= 300
             } else if roverSide == .right {
                 // Do Nothing
@@ -162,20 +200,56 @@ public class GameScene: SKScene {
 
         self.addChild(rover)
 
-        let scoreBackGround = SKShapeNode(rect:CGRect(x:-self.size.width/2 + 70 ,y:self.size.height/2 - 130 ,width:180,height:80), cornerRadius: 20)
+        let staticScoreLabel = SKLabelNode()
+        staticScoreLabel.fontName = "AvenirNext-Bold"
+        staticScoreLabel.text = "Years"
+        staticScoreLabel.fontColor = SKColor.white
+        staticScoreLabel.position = CGPoint(x: -self.size.width/2 + 160, y: self.size.height/2 - 110)
+        staticScoreLabel.fontSize = 50
+        staticScoreLabel.zPosition = 4
+        addChild(staticScoreLabel)
+        
+
+        scoreLabel.name = "score"
+        scoreLabel.fontName = "AvenirNext-Bold"
+        scoreLabel.text = "0"
+        scoreLabel.fontColor = SKColor.white
+        scoreLabel.position = CGPoint(x: -self.size.width/2 + 160, y: staticScoreLabel.position.y - 70)
+        scoreLabel.fontSize = 50
+        scoreLabel.zPosition = 4
+        addChild(scoreLabel)
+        
+        let scoreBackGround = SKShapeNode(rect:CGRect(x: scoreLabel.position.x - 90 ,y: scoreLabel.position.y - 20 ,width:180,height:80), cornerRadius: 12)
         scoreBackGround.zPosition = 4
         scoreBackGround.fillColor = SKColor.black.withAlphaComponent(0.3)
         scoreBackGround.strokeColor = SKColor.black.withAlphaComponent(0.3)
         addChild(scoreBackGround)
         
-        scoreText.name = "score"
-        scoreText.fontName = "AvenirNext-Bold"
-        scoreText.text = "0"
-        scoreText.fontColor = SKColor.white
-        scoreText.position = CGPoint(x: -self.size.width/2 + 160, y: self.size.height/2 - 110)
-        scoreText.fontSize = 50
-        scoreText.zPosition = 4
-        addChild(scoreText)
+        let staticLivesLabel = SKLabelNode()
+        staticLivesLabel.fontName = "AvenirNext-Bold"
+        staticLivesLabel.text = "Energy"
+        staticLivesLabel.fontColor = SKColor.white
+        staticLivesLabel.position = CGPoint(x: self.frame.maxX - 160 , y: self.size.height/2 - 110)
+        staticLivesLabel.fontSize = 50
+        staticLivesLabel.zPosition = 4
+        addChild(staticLivesLabel)
+
+        energyLabel.name = "energy"
+        energyLabel.text = "100%"
+        energyLabel.fontName = "AvenirNext-Bold"
+        energyLabel.fontColor = SKColor.white
+        energyLabel.position = CGPoint(x:  self.frame.maxX - 160 , y: staticLivesLabel.position.y - 70)
+        energyLabel.fontSize = 50
+        energyLabel.zPosition = 4
+        addChild(energyLabel)
+        
+        let livesBackground = SKShapeNode(rect:CGRect(x: energyLabel.position.x - 90 ,y: energyLabel.position.y - 20 ,width:180,height:80), cornerRadius: 12)
+        livesBackground.zPosition = 4
+        livesBackground.fillColor = SKColor.black.withAlphaComponent(0.3)
+        livesBackground.strokeColor = SKColor.black.withAlphaComponent(0.3)
+        addChild(livesBackground)
+        
+
     }
 
 
@@ -252,55 +326,134 @@ public class GameScene: SKScene {
             let car = rover as! SKSpriteNode
             car.position.y -= 15
         })
+        
+        enumerateChildNodes(withName: "energyOrb", using: { (rover, stop) in
+            let car = rover as! SKSpriteNode
+            car.position.y -= 15
+        })
+
 
     }
 
     
     @objc func traffic(){
+        if !stopEverything {
+            let randonNumber = Helper().randomBetweenTwoNumbers(firstNumber: 1, secondNumber: 100)
+            switch Int(randonNumber){
+            case 1...20:
+                throwEnergy()
+            default:
+                throwRock()
+            }
+        }
+    }
+    func throwEnergy(){
+        let energy : SKSpriteNode!
+        energy = SKSpriteNode(imageNamed: "energyOrb")
+        energy.name = "energyOrb"
+
+        energy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        energy.zPosition = 10
+
+        let randomNum = Helper().randomBetweenTwoNumbers(firstNumber: 1, secondNumber: 10)
+        switch Int(randomNum) {
+        case 1...3:
+            energy.position.x = self.size.width / 3
+            break
+        case 4...6:
+            energy.position.x = 0
+            break
+        case 7...10:
+            energy.position.x = self.size.width / -3
+            break
+        default:
+            energy.position.x = 0
+        }
+        
+        energy.run(SKAction.rotate(byAngle: 10, duration: 10))
+        energy.position.y = 700
+        energy.physicsBody = SKPhysicsBody(circleOfRadius: energy.size.height/2)
+        energy.physicsBody?.categoryBitMask = ColliderType.ITEM_COLLIDER
+        energy.physicsBody?.collisionBitMask = 0
+        energy.physicsBody?.affectedByGravity = false
+        energy.physicsBody?.usesPreciseCollisionDetection = true
+        addChild(energy)
+    }
+    func throwRock(){
+        let rock : SKSpriteNode!
+        let randonNumber = Helper().randomBetweenTwoNumbers(firstNumber: 1, secondNumber: 10)
+        switch Int(randonNumber) {
+        case 1...3:
+            rock = SKSpriteNode(imageNamed: "rock1")
+            rock.name = "rock1"
+            break
+        case 4...7:
+            rock = SKSpriteNode(imageNamed: "rock2")
+            rock.name = "rock2"
+            break
+        case 8...10:
+            rock = SKSpriteNode(imageNamed: "rock3")
+            rock.name = "rock3"
+            break
+        default:
+            rock = SKSpriteNode(imageNamed: "rock1")
+            rock.name = "rock1"
+        }
+        rock.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        rock.zPosition = 10
+        
+        let randomNum = Helper().randomBetweenTwoNumbers(firstNumber: 1, secondNumber: 10)
+        switch Int(randomNum) {
+        case 1...3:
+            rock.position.x = self.size.width / 3
+            break
+        case 4...6:
+            rock.position.x = 0
+            break
+        case 7...10:
+            rock.position.x = self.size.width / -3
+            break
+        default:
+            rock.position.x = 0
+        }
+        
+        rock.run(SKAction.rotate(byAngle: 10, duration: 10))
+        rock.position.y = 700
+        rock.physicsBody = SKPhysicsBody(circleOfRadius: rock.size.height/2)
+        rock.physicsBody?.categoryBitMask = ColliderType.ITEM_COLLIDER
+        rock.physicsBody?.collisionBitMask = 0
+        rock.physicsBody?.affectedByGravity = false
+        rock.physicsBody?.usesPreciseCollisionDetection = true
+        addChild(rock)
+
+    }
+    
+    func addEnergy(){
+        energy += 5
+    }
+    
+    func loseEnergyWith(amount: Int){
         if !stopEverything{
-            let trafficItem : SKSpriteNode!
-            let randonNumber = Helper().randomBetweenTwoNumbers(firstNumber: 1, secondNumber: 10)
-            switch Int(randonNumber) {
-            case 1...3:
-                trafficItem = SKSpriteNode(imageNamed: "rock1")
-                trafficItem.name = "rock1"
-                break
-            case 4...7:
-                trafficItem = SKSpriteNode(imageNamed: "rock2")
-                trafficItem.name = "rock2"
-                break
-            case 8...10:
-                trafficItem = SKSpriteNode(imageNamed: "rock3")
-                trafficItem.name = "rock3"
-                break
-            default:
-                trafficItem = SKSpriteNode(imageNamed: "rock1")
-                trafficItem.name = "rock1"
+            if energy - amount < 0 || energy == 0{ // END GAME
+                energy = 0
+                endGame()
+            } else {
+                energy -= amount
             }
-            trafficItem.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-            trafficItem.zPosition = 10
-            let randomNum = Helper().randomBetweenTwoNumbers(firstNumber: 1, secondNumber: 10)
-            switch Int(randomNum) {
-            case 1...3:
-                trafficItem.position.x = -300
-                break
-            case 4...6:
-                trafficItem.position.x = 0
-                break
-            case 7...10:
-                trafficItem.position.x = 300
-                break
-            default:
-                trafficItem.position.x = 0
+            energyLabel.text = "\(energy)%"
+        }
+
+    }
+    @objc func loseEnergy(){
+        if !stopEverything{
+            let valueToDecrease = (100/(gameTime)) // GameTime/ THe amout of time the user will finish his power
+            if energy - valueToDecrease < 0 || energy == 0{ // END GAME
+                energy = 0
+                endGame()
+            } else {
+                energy -= valueToDecrease
             }
-            
-            trafficItem.position.y = 700
-            trafficItem.physicsBody = SKPhysicsBody(circleOfRadius: trafficItem.size.height/2)
-            trafficItem.physicsBody?.categoryBitMask = ColliderType.ITEM_COLLIDER
-            trafficItem.physicsBody?.collisionBitMask = 0
-            trafficItem.physicsBody?.affectedByGravity = false
-            trafficItem.physicsBody?.usesPreciseCollisionDetection = true
-            addChild(trafficItem)
+            energyLabel.text = "\(energy)%"
         }
     }
     
@@ -315,30 +468,30 @@ public class GameScene: SKScene {
     @objc func increaseScore(){
         if !stopEverything{
             score += 1
-            scoreText.text = String(score)
+            scoreLabel.text = String(score)
         }
     }
 
+    func endGame(){
+        
+    }
 
 }
 
 extension GameScene: SKPhysicsContactDelegate {
 }
 
-extension UIImage{
-    
-    func resizeImageWith(newSize: CGSize) -> UIImage {
-        
-        let horizontalRatio = newSize.width / size.width
-        let verticalRatio = newSize.height / size.height
-        
-        let ratio = max(horizontalRatio, verticalRatio)
-        let newSize = CGSize(width: size.width * ratio, height: size.height * ratio)
-        UIGraphicsBeginImageContextWithOptions(newSize, true, 0)
-        draw(in: CGRect(origin: CGPoint(x: 0, y: 0), size: newSize))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage!
+extension UIDevice {
+    static func vibrate() {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
     }
+}
+
+public func gameView() -> SKView {
+    let sceneView = SKView(frame: CGRect(x:0 , y:0, width: 1050, height: 1472))
     
+    let scene = GameScene(size: CGSize(width: 1050, height: 1472))
+    scene.scaleMode = .fill
+    sceneView.presentScene(scene)
+    return sceneView
 }

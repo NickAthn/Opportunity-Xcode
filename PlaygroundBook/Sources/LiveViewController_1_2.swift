@@ -16,11 +16,15 @@ public class LiveViewController_1_2: LiveViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "mars")!)
-//        let screenWidth = UIScreen.main.bounds.width
-//        let screenHeight = UIScreen.main.bounds.height
+       // let screenWidth = UIScreen.main.bounds.width
+       // let screenHeight = UIScreen.main.bounds.height
         
         //PlaygroundPage.current.liveView.
 //        1050 1472
+        
+        //let gameView = SKView(frame: CGRect(x: 0, y: 0, width: 1050, height: 14))
+        
+        
         let scene = GameScene(size: CGSize(width: 1050, height: 1472))
         let skView = view as! SKView
         skView.showsFPS = true
