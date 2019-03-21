@@ -11,36 +11,23 @@ import GameplayKit
 import PlaygroundSupport
 
 public class LiveViewController_1_2: LiveViewController {
-    
+   // let gameScene = GameScene(fileNamed: "GameScene")
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "mars")!)
+//        let screenWidth = UIScreen.main.bounds.width
+//        let screenHeight = UIScreen.main.bounds.height
         
-        let screenWidth = UIScreen.main.bounds.width
-        let screenHeight = UIScreen.main.bounds.height
-        
-
-        // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
-        // including entities and graphs.
-        if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            //let scene = SKScene(size: CGSize(width: view.frame.height, height: view.frame.width))
-            if let scene = SKScene(fileNamed: "GameScene") {
-               // scene.size = CGSize(width: screenHeight, height: screenWidth)
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFit
-                
-                // Present the scene
-                view.presentScene(scene)
-           }
-            
-            view.ignoresSiblingOrder = true
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
-        }
-
-        
+        //PlaygroundPage.current.liveView.
+//        1050 1472
+        let scene = GameScene(size: CGSize(width: 1050, height: 1472))
+        let skView = view as! SKView
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        skView.ignoresSiblingOrder = true
+        scene.scaleMode = .aspectFit
+        skView.presentScene(scene)
     }
     
     override public var shouldAutorotate: Bool {
@@ -68,3 +55,4 @@ public class LiveViewController_1_2: LiveViewController {
         
     }
 }
+

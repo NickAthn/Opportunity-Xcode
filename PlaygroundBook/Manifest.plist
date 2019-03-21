@@ -15,9 +15,9 @@
 	<key>SwiftVersion</key>
 	<string>$(SWIFT_VERSION)</string>
 	<key>Name</key>
-	<string>Playground Book Name</string>
+	<string>PlaygroundBookName</string>
 	<key>ImageReference</key>
-	<string>yourCoverImage.png</string>
+	<string>coverImage.png</string>
 	<key>Chapters</key>
 	<array>
 		<string>Chapter1.playgroundchapter</string>
