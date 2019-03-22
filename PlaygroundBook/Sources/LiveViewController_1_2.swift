@@ -26,8 +26,6 @@ public class LiveViewController_1_2: LiveViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "mars")!)
-       // let screenWidth = UIScreen.main.bounds.width
-       // let screenHeight = UIScreen.main.bounds.height
         
         //PlaygroundPage.current.liveView.
 //        1050 1472
@@ -37,7 +35,20 @@ public class LiveViewController_1_2: LiveViewController {
     }
     
     public func startGame() {
-        let scene = GameScene(size: CGSize(width: 1050, height: 1472))
+        var screenWidth: CGFloat!
+        var screenHeight: CGFloat!
+        
+        if UIDevice.current.orientation.isLandscape {
+            screenWidth = view.frame.width/2
+            screenHeight = view.frame.height
+            print("Landscape")
+        } else {
+            screenWidth = view.frame.height/2
+            screenHeight = view.frame.width
+            print("Portrait")
+        }
+        
+        let scene = GameScene(size: CGSize(width: screenWidth*2, height: screenHeight*2))
         let skView = view as! SKView
         skView.showsFPS = true
         skView.showsNodeCount = true

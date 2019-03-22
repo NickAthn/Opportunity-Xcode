@@ -77,6 +77,8 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
 
         //background.zPosition = 0
         background.position = CGPoint(x: 0, y: 0 )
+        background.yScale = 2
+        background.xScale = 2
         
         //scene?.backgroundColor = UIColor(patternImage: UIImage(named: "MarsMap")!)
         addChild(background)
@@ -155,7 +157,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         canMove = true
     }
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        addIncomingTransmission(text: "fa")
         for touch in touches{
             if touch.tapCount > 1 {
                 print("fire")
@@ -171,9 +172,21 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     func moveRover(to location: CGPoint){
         let distance =  abs((Double(location.x - rover.position.x)))
         let speed: Double = 600
-        let action = SKAction.moveTo(x: location.x, duration: distance/speed)
-        // Move Player with steady speed of "speed" points
-        rover.run(action)
+        if location.x > (self.size.width)/2 || location.x < -((self.size.width)/2) {
+            
+        } else {
+        let move = SKAction.moveTo(x: location.x, duration: distance/speed)
+            
+            // Move Player with steady speed of "speed" points
+    //        if location.x - rover.position.x > 0 {
+    //            rover.run(SKAction.rotate(toAngle: -0.5, duration: 0.5))
+    //        } else {
+    //            rover.run(SKAction.rotate(toAngle: 0.5, duration: 0.5))
+    //        }
+            rover.run(move) {
+    //            self.rover.run(SKAction.rotate(toAngle: 0, duration: 0.5), withKey: "still")
+            }
+        }
     }
     
     override public func update(_ currentTime: TimeInterval) {
@@ -313,10 +326,8 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         satellite.yScale = 0.8
         satellite.zPosition = 4
         satellite.colorBlendFactor = 1
-        satellite.color = .black
+        satellite.color = .white
         addChild(satellite)
-        addIncomingTransmission(text: "FUCK")
-        
 
     }
 
