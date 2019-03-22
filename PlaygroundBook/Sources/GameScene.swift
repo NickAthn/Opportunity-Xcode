@@ -29,7 +29,15 @@ public enum State {
     case won
 }
 
-public class GameScene: SKScene, SKPhysicsContactDelegate {
+protocol CanReceiveTransitionEvents {
+    func viewWillTransition(to size: CGSize)
+}
+
+public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionEvents {
+    func viewWillTransition(to size: CGSize) {
+        
+    }
+    
     // Background Image
     var background = SKSpriteNode(imageNamed: "MarsMap")
     
@@ -55,6 +63,9 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     let energyLabel = SKLabelNode()
     var energy = 100
     
+    // Transmissions
+    var currentTransmissions: [SKLabelNode] = []
+    
     let gameTime = 60
     public func startGame(){
         Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
@@ -72,6 +83,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         setUp()
         physicsWorld.contactDelegate = self
         
+        startGame()
         Timer.scheduledTimer(timeInterval: Double.random(in: 1...1.8), target: self, selector: #selector(GameScene.traffic), userInfo: nil, repeats: true)
         Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(GameScene.removeItems), userInfo: nil, repeats: true)
         
@@ -129,6 +141,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     
         for touch in touches{
             let touchLocation = touch.location(in: self)
+            
             moveRover(to: touchLocation)
         }
         canMove = true
@@ -141,6 +154,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         canMove = true
     }
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        addIncomingTransmission(text: "fa")
         for touch in touches{
             if touch.tapCount > 1 {
                 print("fire")
@@ -168,6 +182,46 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             endGame(state: State.lost)
         }
         throwProjectiles()
+    }
+    
+    func addIncomingTransmission(text: String){
+        let transmissionLabel = SKLabelNode(text: "")
+        transmissionLabel.text = text
+        transmissionLabel.horizontalAlignmentMode = .left
+        transmissionLabel.verticalAlignmentMode = .top
+        transmissionLabel.fontName = "AvenirNext-Regular"
+        
+        transmissionLabel.fontColor = #colorLiteral(red: 0.4500938654, green: 0.9813225865, blue: 0.4743030667, alpha: 1)
+        if #available(iOS 11.0, *) {transmissionLabel.numberOfLines = 0} else {}
+        if #available(iOS 11.0, *) {transmissionLabel.preferredMaxLayoutWidth = self.size.width/2} else {}
+        
+        transmissionLabel.fontSize = 35
+        transmissionLabel.zPosition = 4
+        addChild(transmissionLabel)
+        transmissionLabel.position = CGPoint(x: -self.size.width/2 + 30, y: self.size.height/2 - 280)
+
+        if currentTransmissions.isEmpty {
+            
+        } else {
+            var counter: CGFloat = 0
+            for transmission in currentTransmissions {
+                counter += 0.2
+                if #available(iOS 11.0, *) {transmission.run(SKAction.moveBy(x: 0, y: -transmissionLabel.frame.height, duration: 0.1))} else {}
+            }
+        }
+        
+        if currentTransmissions.count >= 3 {
+                currentTransmissions.first?.run(SKAction.fadeOut(withDuration: 0.3), completion: {
+                    self.currentTransmissions.first?.removeFromParent()
+                })
+        }
+
+        currentTransmissions.append(transmissionLabel)
+        
+        transmissionLabel.startTyping(0.1) {
+            transmissionLabel.run(SKAction.sequence([SKAction.wait(forDuration: 5),SKAction.fadeOut(withDuration: 1)]))
+        }
+
     }
     
     
@@ -243,6 +297,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         livesBackground.strokeColor = SKColor.black.withAlphaComponent(0.3)
         addChild(livesBackground)
         
+        addIncomingTransmission(text: "FUCK")
 
     }
 
@@ -448,4 +503,25 @@ public struct ColliderType {
     
     static let ITEM_COLLIDER : UInt32 = 1
     static let ITEM_COLLIDER_1 : UInt32 = 2
+}
+
+extension SKLabelNode{
+    func startTyping(_ duration:TimeInterval, completion:(()->Void)?){
+        guard let text = self.text else{return}
+        
+        self.text = ""
+        var index = 0
+        var block:(() -> Void)!
+        block = {
+            index += 1
+            if index > text.count{
+                completion?()
+                return
+            }else{
+                let action = SKAction.sequence([SKAction.wait(forDuration: duration), SKAction.run{self.text = String(text.prefix(index))}])
+                self.run(action, completion: block)
+            }
+        }
+        block()
+    }
 }

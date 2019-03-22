@@ -29,7 +29,9 @@ let true = true
 
 // Completion of user-entered code:
 //Use //#-code-completion syntax to allow only specified code to be entered by the user. (info here: https://developer.apple.com/documentation/swift_playgrounds/customizing_the_completions_in_the_shortcut_bar)
-
+func openEyes() -> <#return type#> {
+    <#function body#>
+}
 
 //#-end-hidden-code
 /*:
@@ -44,6 +46,9 @@ let true = true
 //#-code-completion(everything, hide)
 //#-code-completion(everything, show, false, true)
 let eyeOpen = /*#-editable-code*/<#T##false##Bool#>/*#-end-editable-code*/
+/*:
+ [Skip to the end](@next)
+*/
 
 
 

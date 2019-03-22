@@ -12,6 +12,16 @@ import PlaygroundSupport
 
 public class LiveViewController_1_2: LiveViewController {
    // let gameScene = GameScene(fileNamed: "GameScene")
+    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator){
+        
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        guard
+            let skView = self.view as? SKView,
+            let canReceiveRotationEvents = skView.scene as? CanReceiveTransitionEvents else { return }
+        
+        canReceiveRotationEvents.viewWillTransition(to: size)
+    }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +33,10 @@ public class LiveViewController_1_2: LiveViewController {
 //        1050 1472
         
         //let gameView = SKView(frame: CGRect(x: 0, y: 0, width: 1050, height: 14))
-        
+        startGame()
+    }
+    
+    public func startGame() {
         let scene = GameScene(size: CGSize(width: 1050, height: 1472))
         let skView = view as! SKView
         skView.showsFPS = true
@@ -32,10 +45,6 @@ public class LiveViewController_1_2: LiveViewController {
         scene.scaleMode = .aspectFit
         //skView.presentScene(scene)
         skView.presentScene(scene, transition: SKTransition.doorsOpenVertical(withDuration: 10))
-    }
-    
-    public override func viewDidAppear(_ animated: Bool) {
-
     }
     override public var shouldAutorotate: Bool {
         return true

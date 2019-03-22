@@ -28,7 +28,7 @@ Once upon a time there was a small little rover named [Opportunity](glossary://O
 
 At the time NASA like many other space agencies were eager to explore a planet known as [Mars](glossary://Mars) and unravel all of its secrets. The brilliant team of NASA created two twin rovers “[Opportunity](glossary://Opportunity)” and “[Spirit](glossary://Spirit)” with the goal to aid that mission and be sent far away from our earth to explore Mars.
 
-The mission was planned to last about 90 days…
+The mission on mars was planned to last 90 days…
 
 [Next Page](@next)
 */
