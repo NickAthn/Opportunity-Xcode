@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 import PlaygroundSupport
 
-public class LiveViewController_1_2: LiveViewController {
+public class LiveViewController_1_2: LiveViewController{
    // let gameScene = GameScene(fileNamed: "GameScene")
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator){
         
@@ -37,15 +37,14 @@ public class LiveViewController_1_2: LiveViewController {
     public func startGame() {
         var screenWidth: CGFloat!
         var screenHeight: CGFloat!
-        
-        if UIDevice.current.orientation.isLandscape {
+
+        if view.frame.width > view.frame.height { // Landscape
             screenWidth = view.frame.width/2
             screenHeight = view.frame.height
-            print("Landscape")
-        } else {
+        } else { // Portrait
             screenWidth = view.frame.height/2
             screenHeight = view.frame.width
-            print("Portrait")
+
         }
         
         let scene = GameScene(size: CGSize(width: screenWidth*2, height: screenHeight*2))
