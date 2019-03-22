@@ -35,6 +35,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Rover and its Properties
     var rover = SKSpriteNode()
+    var isHit = false
     
     var canMove = false
     var centerPoint : CGFloat!
@@ -68,7 +69,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         setUp()
         physicsWorld.contactDelegate = self
         Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
-        Timer.scheduledTimer(timeInterval: TimeInterval(Helper().randomBetweenTwoNumbers(firstNumber: 1, secondNumber: 1.8)), target: self, selector: #selector(GameScene.traffic), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: Double.random(in: 1...1.8), target: self, selector: #selector(GameScene.traffic), userInfo: nil, repeats: true)
         Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(GameScene.removeItems), userInfo: nil, repeats: true)
         
         let deadTime = DispatchTime.now() + 1
@@ -81,40 +82,38 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: - Collision Logic
     public func didBegin(_ contact: SKPhysicsContact) {
-        var bodyToRemove = SKPhysicsBody()
+        var firstBody:SKPhysicsBody
+        var secondBody:SKPhysicsBody
         
-        if contact.bodyA.node?.name == "rover"{
-            if contact.bodyB.node?.name == "energyOrb" {
-                bodyToRemove = contact.bodyB
-                addEnergy()
-            } else {
-                
-                bodyToRemove = contact.bodyA
-                loseEnergyWith(amount: 10)
-                if energy == 0 {
-                    bodyToRemove = contact.bodyA
-                } else {
-                    bodyToRemove = contact.bodyB
-                }
-            }
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
         }else{
-            if contact.bodyA.node?.name == "energyOrb" {
-                bodyToRemove = contact.bodyA
-                addEnergy()
-            } else {
-                
-                loseEnergyWith(amount: 10)
-                if energy == 0 {
-                    bodyToRemove = contact.bodyB
-                } else {
-                    bodyToRemove = contact.bodyA
-                }
-            }
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
         }
-        bodyToRemove.node?.removeFromParent()
+        
+        if secondBody.node?.name == "rock" && isHit == false {
+            isHit = true
+            let fadeRed = SKAction.colorize(with: .red, colorBlendFactor: 1, duration: 0.3)
+            let fadeWhite = SKAction.colorize(with: .white, colorBlendFactor: 1, duration: 0.3)
+            energyLabel.run(SKAction.repeat(SKAction.sequence([fadeRed, fadeWhite]), count: 2), withKey: "colorChange")
+            let fadeOut = SKAction.fadeAlpha(to: 0.5, duration: 0.3)
+            let fadeIn = SKAction.fadeAlpha(to: 1, duration: 0.3)
+            let animation = SKAction.repeat(SKAction.sequence([fadeOut, fadeIn]), count: 3)
+            firstBody.node?.run(animation, completion: {
+                self.isHit = false
+            })
+            secondBody.node?.removeFromParent()
+        } else if secondBody.node?.name == "energyOrb" {
+            let fadeGreen = SKAction.colorize(with: .green, colorBlendFactor: 1, duration: 0.5)
+            let fadeWhite = SKAction.colorize(with: .white, colorBlendFactor: 1, duration: 0.5)
+            energyLabel.run(SKAction.repeat(SKAction.sequence([fadeGreen, fadeWhite]), count: 1), withKey: "colorChange")
+            secondBody.node?.removeFromParent()
+        }
     }
     
-    // Needs refactoring
+    // MARK: - Touch Logic
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches{
             let touchLocation = touch.location(in: self)
@@ -139,8 +138,9 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     func moveRover(to location: CGPoint){
         let distance =  abs((Double(location.x - rover.position.x)))
         let speed: Double = 600
+        let action = SKAction.moveTo(x: location.x, duration: distance/speed)
         // Move Player with steady speed of "speed" points
-        rover.run(SKAction.moveTo(x: location.x, duration: distance/speed))
+        rover.run(action, withKey: "playerMoving")
     }
     
     override public func update(_ currentTime: TimeInterval) {
@@ -152,8 +152,8 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         throwProjectiles()
     }
     
+    // MARK: - Setting up view
     func setUp(){
-        //rover = self.childNode(withName: "rover") as! SKSpriteNode
         rover = SKSpriteNode(imageNamed: "rover")
         rover.xScale = 0.75
         rover.yScale = 0.75
@@ -165,6 +165,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         rover.physicsBody?.usesPreciseCollisionDetection = true
         rover.physicsBody?.isDynamic = true
         rover.physicsBody?.affectedByGravity = false
+        
         
         centerPoint = self.frame.size.width / self.frame.size.height
         
@@ -259,8 +260,8 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             rover.position.y -= 15
         })
         enumerateChildNodes(withName: "energyOrb", using: { (rover, stop) in
-            let car = rover as! SKSpriteNode
-            car.position.y -= 10
+            let rover = rover as! SKSpriteNode
+            rover.position.y -= 10
         })
 
 
@@ -287,8 +288,10 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         energy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         energy.zPosition = 10
 
-        let maxLeftValue = Int(-(view?.frame.maxX)!) + 50
-        let maxRightValue = Int((view?.frame.maxX)!) - 50
+        let viewMaxX = view?.frame.maxX ?? 0
+        
+        let maxLeftValue = Int(-(viewMaxX)) + 50
+        let maxRightValue = Int(viewMaxX) - 50
         let randomPosition = GKRandomDistribution(lowestValue: maxLeftValue , highestValue: maxRightValue)
         let position = CGFloat(randomPosition.nextInt())
         energy.position = CGPoint(x: position, y: self.frame.size.height + energy.size.height)
@@ -301,21 +304,24 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         energy.physicsBody?.usesPreciseCollisionDetection = true
         addChild(energy)
     }
-    
     func addRock(){
         possibleRocks = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: possibleRocks) as! [String]
         let rock = SKSpriteNode(imageNamed: possibleRocks.first!)
         rock.name = "rock"
-
-        let maxLeftValue = Int(-(view?.frame.maxX)!) + 50
-        let maxRightValue = Int((view?.frame.maxX)!) - 50
+        
+        let viewMaxX = view?.frame.maxX ?? 0
+        
+        let maxLeftValue = Int(-(viewMaxX)) + 50
+        let maxRightValue = Int(viewMaxX) - 50
         let randomPosition = GKRandomDistribution(lowestValue: maxLeftValue , highestValue: maxRightValue)
         let position = CGFloat(randomPosition.nextInt())
         rock.position = CGPoint(x: position, y: self.frame.size.height + rock.size.height)
  
         rock.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         rock.zPosition = 10
-
+        let randomSizeIncrease = CGFloat(GKRandomDistribution(lowestValue: -30, highestValue: 50).nextInt())
+        rock.scale(to: CGSize(width: rock.size.width + randomSizeIncrease  , height: rock.size.height + randomSizeIncrease ))
+        
         rock.physicsBody = SKPhysicsBody(circleOfRadius: rock.size.height/2)
         rock.physicsBody?.isDynamic = true
         
