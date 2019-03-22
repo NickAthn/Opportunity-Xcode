@@ -49,6 +49,9 @@ round-trip min/avg/max/stddev = 0/0/0/0 ms
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qaR-nP-dw0"/>
                     </view>
+                    <connections>
+                        <outlet property="consoleTextView" destination="eqU-7s-JYI" id="4Td-Qs-CHY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uvi-wC-fap" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

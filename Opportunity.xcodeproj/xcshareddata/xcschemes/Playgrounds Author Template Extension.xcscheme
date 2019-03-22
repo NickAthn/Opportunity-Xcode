@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5E086DBF2051C5A7004D8D25"
-               BuildableName = "Playgrounds Author Template Extension.playgroundbook"
+               BuildableName = "Opportunity.playgroundbook"
                BlueprintName = "Opportunity"
                ReferencedContainer = "container:Opportunity.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5E086DBF2051C5A7004D8D25"
-            BuildableName = "Playgrounds Author Template Extension.playgroundbook"
+            BuildableName = "Opportunity.playgroundbook"
             BlueprintName = "Opportunity"
             ReferencedContainer = "container:Opportunity.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5E086DBF2051C5A7004D8D25"
-            BuildableName = "Playgrounds Author Template Extension.playgroundbook"
+            BuildableName = "Opportunity.playgroundbook"
             BlueprintName = "Opportunity"
             ReferencedContainer = "container:Opportunity.xcodeproj">
          </BuildableReference>

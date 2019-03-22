@@ -38,12 +38,16 @@
 		96EB86AE22393C0D0000332C /* USAGE.md in Resources */ = {isa = PBXBuildFile; fileRef = 96EB86AD22393C0D0000332C /* USAGE.md */; };
 		E64E27E722406C70004B1ED0 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = E64E27E522406C70004B1ED0 /* spark.png */; };
 		E64E27E822406C70004B1ED0 /* Reactor.scnp in Resources */ = {isa = PBXBuildFile; fileRef = E64E27E622406C70004B1ED0 /* Reactor.scnp */; };
-		E66161C42241991400AE107E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = E66161B5224194EE00AE107E /* GameScene.sks */; };
 		E66161C52241993200AE107E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66161B3224194ED00AE107E /* GameScene.swift */; };
 		E66161C62241993400AE107E /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66161B4224194ED00AE107E /* Helper.swift */; };
-		E66161C72241993800AE107E /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = E66161B5224194EE00AE107E /* GameScene.sks */; };
 		E69FCB25223F023C002C5C09 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B2EFD1223EFE2D00687B88 /* art.scnassets */; };
 		E6B2EFD2223EFE2D00687B88 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B2EFD1223EFE2D00687B88 /* art.scnassets */; };
+		E6E538DB224401700074A197 /* EndGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E538DA224401700074A197 /* EndGameScene.swift */; };
+		E6E538DC224401700074A197 /* EndGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E538DA224401700074A197 /* EndGameScene.swift */; };
+		E6E538DE224402570074A197 /* EndGameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = E6E538DD224402570074A197 /* EndGameScene.sks */; };
+		E6E538DF22441E7A0074A197 /* EndGameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = E6E538DD224402570074A197 /* EndGameScene.sks */; };
+		E6E538E022442B890074A197 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66161B3224194ED00AE107E /* GameScene.swift */; };
+		E6E538E122442B990074A197 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66161B4224194ED00AE107E /* Helper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -151,6 +155,8 @@
 		E66161B4224194ED00AE107E /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		E66161B5224194EE00AE107E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		E6B2EFD1223EFE2D00687B88 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
+		E6E538DA224401700074A197 /* EndGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameScene.swift; sourceTree = "<group>"; };
+		E6E538DD224402570074A197 /* EndGameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EndGameScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				E66161B3224194ED00AE107E /* GameScene.swift */,
+				E6E538DA224401700074A197 /* EndGameScene.swift */,
 				E66161B4224194ED00AE107E /* Helper.swift */,
 				5E3196F22061DEA40077BBD7 /* LiveViewSupport.swift */,
 				5EF2F9AD2054BBF300191409 /* LiveViewController.swift */,
@@ -323,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				E66161B5224194EE00AE107E /* GameScene.sks */,
+				E6E538DD224402570074A197 /* EndGameScene.sks */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -433,11 +441,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6E538DF22441E7A0074A197 /* EndGameScene.sks in Resources */,
 				960FFD8A223A7A1B001750E8 /* LiveView_1_1.storyboard in Resources */,
 				E64E27E722406C70004B1ED0 /* spark.png in Resources */,
 				E6B2EFD2223EFE2D00687B88 /* art.scnassets in Resources */,
 				5EF2F97C2054B6E400191409 /* ManifestPlist.strings in Resources */,
-				E66161C72241993800AE107E /* GameScene.sks in Resources */,
 				5E086DCA2051DDAE004D8D25 /* LiveView.storyboard in Resources */,
 				960FFD7A223A67E8001750E8 /* LiveView_1_2.storyboard in Resources */,
 				9686CA0222391AE600E56BAB /* PublicResources in Resources */,
@@ -455,11 +463,11 @@
 				960FFD7E223A6C00001750E8 /* LiveView_1_3.storyboard in Resources */,
 				E69FCB25223F023C002C5C09 /* art.scnassets in Resources */,
 				5EA2E3CA2056F35B00416A35 /* LiveViewTestAppLaunchScreen.storyboard in Resources */,
+				E6E538DE224402570074A197 /* EndGameScene.sks in Resources */,
 				960FFD89223A7A1B001750E8 /* LiveView_1_1.storyboard in Resources */,
 				960FFD7D223A6BFD001750E8 /* LiveView_1_2.storyboard in Resources */,
 				960FFDB6223D8A40001750E8 /* Assets.xcassets in Resources */,
 				960FFD6A22394F56001750E8 /* LiveView.storyboard in Resources */,
-				E66161C42241991400AE107E /* GameScene.sks in Resources */,
 				960FFDB3223D8986001750E8 /* PublicResources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -490,7 +498,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6E538E022442B890074A197 /* GameScene.swift in Sources */,
+				E6E538DC224401700074A197 /* EndGameScene.swift in Sources */,
 				5EA2E3C02056F35A00416A35 /* AppDelegate.swift in Sources */,
+				E6E538E122442B990074A197 /* Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +513,7 @@
 				E66161C62241993400AE107E /* Helper.swift in Sources */,
 				5E3196F32061DEA40077BBD7 /* LiveViewSupport.swift in Sources */,
 				5EF2F9AE2054BBF300191409 /* LiveViewController.swift in Sources */,
+				E6E538DB224401700074A197 /* EndGameScene.swift in Sources */,
 				960FFD84223A77DD001750E8 /* LiveViewController_1_1.swift in Sources */,
 				960FFD86223A7898001750E8 /* LiveViewController_1_2.swift in Sources */,
 				960FFD88223A789F001750E8 /* LiveViewController_1_3.swift in Sources */,

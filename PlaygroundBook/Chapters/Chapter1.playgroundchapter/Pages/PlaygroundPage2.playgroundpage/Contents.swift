@@ -42,7 +42,7 @@ let true = true
  First open her eyes
  */
 //#-code-completion(everything, hide)
-//#-code-completion(everything, show, false, true, bool)
+//#-code-completion(everything, show, false, true)
 let eyeOpen = /*#-editable-code*/<#T##false##Bool#>/*#-end-editable-code*/
 
 
