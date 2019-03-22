@@ -64,10 +64,10 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //scene?.backgroundColor = UIColor(patternImage: UIImage(named: "MarsMap")!)
         addChild(background)
-
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         setUp()
         physicsWorld.contactDelegate = self
+        
         Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
         Timer.scheduledTimer(timeInterval: Double.random(in: 1...1.8), target: self, selector: #selector(GameScene.traffic), userInfo: nil, repeats: true)
         Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(GameScene.removeItems), userInfo: nil, repeats: true)
@@ -94,28 +94,41 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if secondBody.node?.name == "rock" && isHit == false {
-            isHit = true
-            let fadeRed = SKAction.colorize(with: .red, colorBlendFactor: 1, duration: 0.3)
-            let fadeWhite = SKAction.colorize(with: .white, colorBlendFactor: 1, duration: 0.3)
-            energyLabel.run(SKAction.repeat(SKAction.sequence([fadeRed, fadeWhite]), count: 2), withKey: "colorChange")
-            let fadeOut = SKAction.fadeAlpha(to: 0.5, duration: 0.3)
-            let fadeIn = SKAction.fadeAlpha(to: 1, duration: 0.3)
-            let animation = SKAction.repeat(SKAction.sequence([fadeOut, fadeIn]), count: 3)
-            firstBody.node?.run(animation, completion: {
-                self.isHit = false
-            })
-            secondBody.node?.removeFromParent()
+            roverDidCollideWithRock(rover: firstBody.node as! SKSpriteNode, rock: secondBody.node as! SKSpriteNode)
         } else if secondBody.node?.name == "energyOrb" {
-            let fadeGreen = SKAction.colorize(with: .green, colorBlendFactor: 1, duration: 0.5)
-            let fadeWhite = SKAction.colorize(with: .white, colorBlendFactor: 1, duration: 0.5)
-            energyLabel.run(SKAction.repeat(SKAction.sequence([fadeGreen, fadeWhite]), count: 1), withKey: "colorChange")
-            secondBody.node?.removeFromParent()
+            roverDidCollideWithEnergyOrb(rover: firstBody.node as! SKSpriteNode, energyOrb: secondBody.node as! SKSpriteNode)
         }
+    }
+    func roverDidCollideWithEnergyOrb(rover: SKSpriteNode, energyOrb: SKSpriteNode) {
+        let fadeGreen = SKAction.colorize(with: .green, colorBlendFactor: 1, duration: 0.5)
+        let fadeWhite = SKAction.colorize(with: .white, colorBlendFactor: 1, duration: 0.5)
+        energyLabel.run(SKAction.repeat(SKAction.sequence([fadeGreen, fadeWhite]), count: 1), withKey: "colorChange")
+        energyOrb.removeFromParent()
+
+    }
+    func roverDidCollideWithRock(rover: SKSpriteNode, rock: SKSpriteNode) {
+        isHit = true
+        let fadeRed = SKAction.colorize(with: .red, colorBlendFactor: 1, duration: 0.3)
+        let fadeWhite = SKAction.colorize(with: .white, colorBlendFactor: 1, duration: 0.3)
+        energyLabel.run(SKAction.repeat(SKAction.sequence([fadeRed, fadeWhite]), count: 2), withKey: "colorChange")
+        let fadeOut = SKAction.fadeAlpha(to: 0.5, duration: 0.3)
+        let fadeIn = SKAction.fadeAlpha(to: 1, duration: 0.3)
+        let animation = SKAction.repeat(SKAction.sequence([fadeOut, fadeIn]), count: 3)
+        rover.run(animation, completion: {
+            self.isHit = false
+        })
+        self.run(SKAction.playSoundFileNamed("crash.mp3", waitForCompletion: false))
+        rock.removeFromParent()
     }
     
     // MARK: - Touch Logic
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    
         for touch in touches{
+            if touch.tapCount > 1 {
+                print("fire")
+                // TODO: Implement Fire Action Here
+            }
             let touchLocation = touch.location(in: self)
             moveRover(to: touchLocation)
         }
@@ -135,12 +148,14 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         canMove = true
     }
+    
+    
     func moveRover(to location: CGPoint){
         let distance =  abs((Double(location.x - rover.position.x)))
         let speed: Double = 600
         let action = SKAction.moveTo(x: location.x, duration: distance/speed)
         // Move Player with steady speed of "speed" points
-        rover.run(action, withKey: "playerMoving")
+        rover.run(action)
     }
     
     override public func update(_ currentTime: TimeInterval) {
@@ -151,6 +166,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         throwProjectiles()
     }
+    
     
     // MARK: - Setting up view
     func setUp(){
@@ -169,7 +185,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         
         centerPoint = self.frame.size.width / self.frame.size.height
         
-        rover.physicsBody?.categoryBitMask = ColliderType.CAR_COLLIDER
+        rover.physicsBody?.categoryBitMask = ColliderType.ROVER_COLLIDER
         rover.physicsBody?.contactTestBitMask = ColliderType.ITEM_COLLIDER
         rover.physicsBody?.collisionBitMask = 0
 
@@ -263,8 +279,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
             let rover = rover as! SKSpriteNode
             rover.position.y -= 10
         })
-
-
     }
 
     
@@ -395,4 +409,11 @@ public func gameView() -> SKView {
     scene.scaleMode = .fill
     sceneView.presentScene(scene)
     return sceneView
+}
+
+public struct ColliderType {
+    static let ROVER_COLLIDER : UInt32 = 0
+    
+    static let ITEM_COLLIDER : UInt32 = 1
+    static let ITEM_COLLIDER_1 : UInt32 = 2
 }
