@@ -65,6 +65,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     
     // Transmissions
     var currentTransmissions: [SKLabelNode] = []
+    var satellite = SKSpriteNode()
     
     let gameTime = 60
     public func startGame(){
@@ -73,7 +74,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     
     
     override public func didMove(to view: SKView) {
-        
+
         //background.zPosition = 0
         background.position = CGPoint(x: 0, y: 0 )
         
@@ -221,7 +222,15 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         transmissionLabel.startTyping(0.1) {
             transmissionLabel.run(SKAction.sequence([SKAction.wait(forDuration: 5),SKAction.fadeOut(withDuration: 1)]))
         }
-
+        
+        // Satellite Icon Animation
+        satellite.run(SKAction.repeat(SKAction.sequence([SKAction.colorize(with: .green, colorBlendFactor: 1, duration: 0.3),SKAction.colorize(with: .white, colorBlendFactor: 1, duration: 0.3)]), count: 1))
+        let rotateLeft = SKAction.rotate(toAngle: -0.1, duration: 0.1)
+        let rotateRight = SKAction.rotate(toAngle: 0.1, duration: 0.1)
+        let defaultRotation = SKAction.rotate(toAngle: 0, duration: 0.1)
+        let rotationSequence = SKAction.sequence([rotateRight, rotateLeft])
+        let sequence = SKAction.sequence([SKAction.repeat(rotationSequence, count: 2), defaultRotation ])
+        satellite.run(sequence)
     }
     
     
@@ -297,7 +306,17 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         livesBackground.strokeColor = SKColor.black.withAlphaComponent(0.3)
         addChild(livesBackground)
         
+        satellite = SKSpriteNode(texture: SKTexture(imageNamed: "satellite"))
+        satellite.name = "sat"
+        satellite.position = CGPoint(x:  -self.size.width/2 + 320 , y: scoreLabel.position.y + 15)
+        satellite.xScale = 0.8
+        satellite.yScale = 0.8
+        satellite.zPosition = 4
+        satellite.colorBlendFactor = 1
+        satellite.color = .black
+        addChild(satellite)
         addIncomingTransmission(text: "FUCK")
+        
 
     }
 
