@@ -56,6 +56,10 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     var energy = 100
     
     let gameTime = 60
+    public func startGame(){
+        Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
+    }
+    
     
     override public func didMove(to view: SKView) {
         
@@ -68,7 +72,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         setUp()
         physicsWorld.contactDelegate = self
         
-        Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
         Timer.scheduledTimer(timeInterval: Double.random(in: 1...1.8), target: self, selector: #selector(GameScene.traffic), userInfo: nil, repeats: true)
         Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(GameScene.removeItems), userInfo: nil, repeats: true)
         
@@ -125,10 +128,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     
         for touch in touches{
-            if touch.tapCount > 1 {
-                print("fire")
-                // TODO: Implement Fire Action Here
-            }
             let touchLocation = touch.location(in: self)
             moveRover(to: touchLocation)
         }
@@ -143,6 +142,10 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches{
+            if touch.tapCount > 1 {
+                print("fire")
+                fireProjectile()
+            }
             let touchLocation = touch.location(in: self)
             moveRover(to: touchLocation)
         }
@@ -260,6 +263,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 let deadTime = DispatchTime.now() + 0.5
                 DispatchQueue.main.asyncAfter(deadline: deadTime, execute: {
+                    
                     countDownLabel.removeFromParent()
                 })
             }
@@ -347,7 +351,35 @@ public class GameScene: SKScene, SKPhysicsContactDelegate {
         
         rock.run(SKAction.rotate(byAngle:CGFloat(GKRandomDistribution.init(lowestValue: -10, highestValue: 10).nextInt()), duration: 10))
     }
-    
+    func fireProjectile() {
+        self.run(SKAction.playSoundFileNamed("fireProjectile.mp3", waitForCompletion: false))
+        
+        let projectile = SKSpriteNode(imageNamed: "projectile")
+        projectile.position = rover.position
+        projectile.position.y += 5
+        projectile.name = "projectile"
+        
+        projectile.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width / 2)
+        projectile.physicsBody?.isDynamic = true
+        
+        projectile.physicsBody?.categoryBitMask = ColliderType.ITEM_COLLIDER_1
+        projectile.physicsBody?.contactTestBitMask = ColliderType.ITEM_COLLIDER
+        projectile.physicsBody?.collisionBitMask = 0
+        projectile.physicsBody?.usesPreciseCollisionDetection = true
+        
+        self.addChild(projectile)
+        
+        let animationDuration:TimeInterval = 0.3
+        
+        
+        var actionArray = [SKAction]()
+        
+        actionArray.append(SKAction.move(to: CGPoint(x: rover.position.x, y: self.frame.size.height + 10), duration: animationDuration))
+        actionArray.append(SKAction.removeFromParent())
+        
+        projectile.run(SKAction.sequence(actionArray))
+    }
+
     func addEnergy(){
         energy += 5
     }

@@ -20,6 +20,7 @@ public class LiveViewController_1_1: LiveViewController {
         scnView.scene = scnStarScene
         scnView.allowsCameraControl = false
         scnView.autoenablesDefaultLighting = true
+        
     }
     
     override public var shouldAutorotate: Bool {

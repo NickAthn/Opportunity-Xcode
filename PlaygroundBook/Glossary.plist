@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Terms</key>
+	<dict>
+		<key>NASA</key>
+		<dict>
+			<key>Definition</key>
+			<string>The National Aeronautics and Space Administration (NASA, /ˈnæsə/) is an independent agency of the United States Federal Government responsible for the civilian space program, as well as aeronautics and aerospace research.</string>
+			<key>FirstUse</key>
+			<dict>
+				<key>PageReference</key>
+				<string>NASA/Issuing%20NASA</string>
+				<key>Title</key>
+				<string>NASA</string>
+			</dict>
+		</dict>
+		<key>Mars</key>
+		<dict>
+			<key>Definition</key>
+			<string>Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System after Mercury. </string>
+		</dict>
+		<key>Spirit</key>
+		<dict>
+			<key>Definition</key>
+			<string>Spirit, also known as MER-A (Mars Exploration Rover – A) or MER-2, is a robotic rover on Mars, active from 2004 to 2010. Its the twin brother of Opportunity</string>
+		</dict>
+		<key>Opportunity</key>
+		<dict>
+			<key>Definition</key>
+			<string>Opportunity, also known as MER-B (Mars Exploration Rover – B) or MER-1, and nicknamed &quot;Oppy&quot;, is a robotic rover that was active on Mars send by NASA</string>
+		</dict>
+		<key>EagleCrater</key>
+		<dict>
+			<key>Definition</key>
+			<string>Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System after Mercury. </string>
+		</dict>
+	</dict>
+</dict>
+</plist>
