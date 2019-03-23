@@ -27,9 +27,9 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     }
     
     // Background Image
-    var background = SKSpriteNode(imageNamed: "MarsMap")
+    var background = SKSpriteNode(imageNamed: "marsMap")
     let backgroundSound = SKAudioNode(fileNamed: Sounds.ambient)
-    let backgroundEmitter = SKEmitterNode(fileNamed: "Rain.sks")
+    let sandStormEmmiter = SKEmitterNode(fileNamed: "SandStorm.sks")
     // Rover and its Properties
     var rover = SKSpriteNode()
     var isHit = false
@@ -69,19 +69,16 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     
     override public func didMove(to view: SKView) {
         
-        //background.zPosition = 0
+        background.zPosition = Game.PositionZ.background
         background.position = CGPoint(x: 0, y: 0 )
         background.yScale = 2
         background.xScale = 2
         
-        //scene?.backgroundColor = UIColor(patternImage: UIImage(named: "MarsMap")!)
         addChild(background)
-       
-        // TODO: Make into a sandstorm
-        backgroundEmitter?.zPosition = 9
-        backgroundEmitter?.position = CGPoint(x: 0, y: view.frame.maxY)
-        backgroundEmitter?.particlePositionRange = CGVector(dx: view.frame.width*2, dy: 0)
-        //addChild(backgroundEmitter!)
+        
+        sandStormEmmiter?.zPosition = Game.PositionZ.enviromentalChanges
+        sandStormEmmiter?.position = CGPoint(x: 0, y: view.frame.maxY)
+        sandStormEmmiter?.particlePositionRange = CGVector(dx: view.frame.width*2, dy: 0)
         
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         setUp()
@@ -230,7 +227,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         if #available(iOS 11.0, *) {transmissionLabel.preferredMaxLayoutWidth = self.size.width/2} else {}
         
         transmissionLabel.fontSize = 35
-        transmissionLabel.zPosition = 4
+        transmissionLabel.zPosition = Game.PositionZ.userInterface
         addChild(transmissionLabel)
         transmissionLabel.position = CGPoint(x: -self.size.width/2 + 30, y: self.size.height/2 - 280)
 
@@ -273,7 +270,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         rover.xScale = 0.75
         rover.yScale = 0.75
         rover.name = "rover"
-        rover.zPosition = 10
+        rover.zPosition = Game.PositionZ.actors
         rover.position.x = 0
         rover.position.y = self.frame.minY + rover.size.height + 30
         rover.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: rover.size.width, height: rover.size.height))
@@ -296,7 +293,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         staticScoreLabel.fontColor = SKColor.white
         staticScoreLabel.position = CGPoint(x: -self.size.width/2 + 160, y: self.size.height/2 - 110)
         staticScoreLabel.fontSize = 50
-        staticScoreLabel.zPosition = 4
+        staticScoreLabel.zPosition = Game.PositionZ.userInterface
         addChild(staticScoreLabel)
         
 
@@ -306,11 +303,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         scoreLabel.fontColor = SKColor.white
         scoreLabel.position = CGPoint(x: -self.size.width/2 + 160, y: staticScoreLabel.position.y - 70)
         scoreLabel.fontSize = 50
-        scoreLabel.zPosition = 4
+        scoreLabel.zPosition = Game.PositionZ.userInterface
         addChild(scoreLabel)
         
         let scoreBackGround = SKShapeNode(rect:CGRect(x: scoreLabel.position.x - 90 ,y: scoreLabel.position.y - 20 ,width:180,height:80), cornerRadius: 12)
-        scoreBackGround.zPosition = 4
+        scoreBackGround.zPosition = Game.PositionZ.userInterfaceBackground
         scoreBackGround.fillColor = SKColor.black.withAlphaComponent(0.3)
         scoreBackGround.strokeColor = SKColor.black.withAlphaComponent(0.3)
         addChild(scoreBackGround)
@@ -321,7 +318,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         staticLivesLabel.fontColor = SKColor.white
         staticLivesLabel.position = CGPoint(x: self.frame.maxX - 160 , y: self.size.height/2 - 110)
         staticLivesLabel.fontSize = 50
-        staticLivesLabel.zPosition = 4
+        staticLivesLabel.zPosition = Game.PositionZ.userInterface
         addChild(staticLivesLabel)
 
         energyLabel.name = "energy"
@@ -330,11 +327,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         energyLabel.fontColor = SKColor.white
         energyLabel.position = CGPoint(x:  self.frame.maxX - 160 , y: staticLivesLabel.position.y - 70)
         energyLabel.fontSize = 50
-        energyLabel.zPosition = 4
+        energyLabel.zPosition = Game.PositionZ.userInterface
         addChild(energyLabel)
         
         let livesBackground = SKShapeNode(rect:CGRect(x: energyLabel.position.x - 90 ,y: energyLabel.position.y - 20 ,width:180,height:80), cornerRadius: 12)
-        livesBackground.zPosition = 4
+        livesBackground.zPosition = Game.PositionZ.userInterfaceBackground
         livesBackground.fillColor = SKColor.black.withAlphaComponent(0.3)
         livesBackground.strokeColor = SKColor.black.withAlphaComponent(0.3)
         addChild(livesBackground)
@@ -344,7 +341,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         satellite.position = CGPoint(x:  -self.size.width/2 + 320 , y: scoreLabel.position.y + 15)
         satellite.xScale = 0.8
         satellite.yScale = 0.8
-        satellite.zPosition = 4
+        satellite.zPosition = Game.PositionZ.userInterface
         satellite.colorBlendFactor = 1
         satellite.color = .white
         addChild(satellite)
@@ -361,7 +358,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
                 countDownLabel.fontSize = 300
                 countDownLabel.text = String(countDown)
                 countDownLabel.position = CGPoint(x: 0, y: 0)
-                countDownLabel.zPosition = 300
+                countDownLabel.zPosition = Game.PositionZ.userInterface
                 countDownLabel.name = "cLabel"
                 countDownLabel.horizontalAlignmentMode = .center
                 addChild(countDownLabel)
@@ -409,7 +406,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         energy.name = "energyOrb"
 
         energy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        energy.zPosition = 10
+        energy.zPosition = Game.PositionZ.actors
 
         let viewMaxX = (view?.frame.size.width ?? 0)/2
 
@@ -443,7 +440,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         rock.position = CGPoint(x: position, y: self.frame.size.height + rock.size.height)
  
         rock.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        rock.zPosition = 10
+        rock.zPosition = Game.PositionZ.actors
         let randomSizeIncrease = CGFloat(GKRandomDistribution(lowestValue: -30, highestValue: 50).nextInt())
         rock.scale(to: CGSize(width: rock.size.width + randomSizeIncrease  , height: rock.size.height + randomSizeIncrease ))
         
