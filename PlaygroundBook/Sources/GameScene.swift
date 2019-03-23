@@ -12,10 +12,12 @@ import SpriteKit
 import GameplayKit
 import AudioToolbox
 
-public enum State {
-    case lost
+public enum End {
+    case crashed
+    case noEnergy
     case won
 }
+
 
 protocol CanReceiveTransitionEvents {
     func viewWillTransition(to size: CGSize)
@@ -64,6 +66,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
         addChild(backgroundSound)
         backgroundSound.autoplayLooped = true
+        endGame(state: .won)
     }
     
     
@@ -80,6 +83,9 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         sandStormEmmiter?.position = CGPoint(x: 0, y: view.frame.maxY)
         sandStormEmmiter?.particlePositionRange = CGVector(dx: view.frame.width*2, dy: 0)
         
+        let changeVolume = SKAction.changeVolume(to: 0.4, duration: 0.3)
+        backgroundSound.run(changeVolume)
+
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         setUp()
         physicsWorld.contactDelegate = self
@@ -190,9 +196,9 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     
     override public func update(_ currentTime: TimeInterval) {
         if year == 2018 && energy > 0 {
-            endGame(state: State.won)
+            endGame(state: End.won)
         } else if energy == 0 {
-            endGame(state: State.lost)
+            endGame(state: End.noEnergy)
         }
         throwProjectiles()
     }
@@ -220,7 +226,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         transmissionLabel.text = text
         transmissionLabel.horizontalAlignmentMode = .left
         transmissionLabel.verticalAlignmentMode = .top
-        transmissionLabel.fontName = "AvenirNext-Regular"
+        transmissionLabel.fontName = Game.FontNames.helveticaNeue.bold//"AvenirNext-Regular"
         
         transmissionLabel.fontColor = #colorLiteral(red: 0.4500938654, green: 0.9813225865, blue: 0.4743030667, alpha: 1)
         if #available(iOS 11.0, *) {transmissionLabel.numberOfLines = 0} else {}
@@ -496,6 +502,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         if !stopEverything{
             if energy - amount < 0 || energy == 0{ // END GAME
                 energy = 0
+                endGame(state: .crashed)
             } else {
                 energy -= amount
             }
@@ -504,15 +511,15 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
 
     }
     @objc func loseEnergy(){
-        if !stopEverything{
-            let valueToDecrease = (100/(gameTime)) // GameTime/ THe amout of time the user will finish his power
-            if energy - valueToDecrease < 0 || energy == 0{ // END GAME
-                energy = 0
-            } else {
-                energy -= valueToDecrease
-            }
-            energyLabel.text = "\(energy)%"
-        }
+//        if !stopEverything{
+//            let valueToDecrease = (100/(gameTime)) // GameTime/ THe amout of time the user will finish his power
+//            if energy - valueToDecrease < 0 || energy == 0{ // END GAME
+//                energy = 0
+//            } else {
+//                energy -= valueToDecrease
+//            }
+//            energyLabel.text = "\(energy)%"
+//        }
     }
     
     @objc func removeItems(){
@@ -528,7 +535,24 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
             year += 1
             scoreLabel.text = String(year)
             transmissionManager()
+            difficulty()
         }
+    }
+    
+    func addSandstorm(for time: TimeInterval = 15){
+        let sandStorm = SKEmitterNode(fileNamed: "SandStorm.sks")!
+        sandStorm.zPosition = Game.PositionZ.enviromentalChanges
+        sandStorm.position = CGPoint(x: -40, y: (view?.frame.maxY ?? 0) + 40)
+        sandStorm.particlePositionRange = CGVector(dx:((view?.frame.width)!)*2, dy: 0)
+        sandStorm.emissionAngle = 40
+        addChild(sandStorm)
+
+        let wait = SKAction.wait(forDuration: time)
+        let fadeOut = SKAction.fadeOut(withDuration: 5)
+        let remove = SKAction.removeFromParent()
+        
+        sandStorm.run(SKAction.sequence([wait,fadeOut,remove]))
+        
     }
     
     func difficulty() {
@@ -539,12 +563,19 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         }
     }
 
-    func endGame(state: State){
+    func endGame(state: End){
         let endScene = EndGameScene(fileNamed: "EndGameScene.sks", state: state)!
         if state == .won {
+                addSandstorm()
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(30), execute: {
+                    self.view?.presentScene(endScene, transition: SKTransition.crossFade(withDuration: 1))
+                })
+
+        } else if state == .crashed {
             view?.presentScene(endScene, transition: SKTransition.crossFade(withDuration: 1))
-        } else {
+        } else if state == .noEnergy {
             view?.presentScene(endScene, transition: SKTransition.crossFade(withDuration: 1))
+
         }
     }
 
@@ -589,7 +620,6 @@ extension SKLabelNode{
 }
 
 extension SKSpriteNode {
-    
     func addGlow(radius: Float = 30) {
         let effectNode = SKEffectNode()
         effectNode.shouldRasterize = true

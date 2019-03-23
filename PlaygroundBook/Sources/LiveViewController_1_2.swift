@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 import PlaygroundSupport
 
+
 public class LiveViewController_1_2: LiveViewController, GameViewController{
     var screenWidth: CGFloat!
     var screenHeight: CGFloat!
@@ -39,7 +40,7 @@ public class LiveViewController_1_2: LiveViewController, GameViewController{
         let scene = StartGameScene(size: CGSize(width: screenWidth, height: screenHeight), viewController: self)
         let skView = view as! SKView
         skView.ignoresSiblingOrder = true
-        scene.scaleMode = .resizeFill
+        scene.scaleMode = .fill
         skView.presentScene(scene)
         //let gameView = SKView(frame: CGRect(x: 0, y: 0, width: 1050, height: 1472))
     }

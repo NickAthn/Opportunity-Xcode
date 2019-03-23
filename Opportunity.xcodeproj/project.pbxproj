@@ -64,8 +64,8 @@
 		E6E73A6D22467FFE003CC970 /* crashThud.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A6B22467FFE003CC970 /* crashThud.mp3 */; };
 		E6E73A76224684DB003CC970 /* SandStorm.sks in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A74224684DB003CC970 /* SandStorm.sks */; };
 		E6E73A77224684DB003CC970 /* SandStorm.sks in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A74224684DB003CC970 /* SandStorm.sks */; };
-		E6E73A7B22468DDD003CC970 /* GameZPositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A7A22468DDD003CC970 /* GameZPositions.swift */; };
-		E6E73A7C22468F95003CC970 /* GameZPositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A7A22468DDD003CC970 /* GameZPositions.swift */; };
+		E6E73A7B22468DDD003CC970 /* GameConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A7A22468DDD003CC970 /* GameConstants.swift */; };
+		E6E73A7C22468F95003CC970 /* GameConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A7A22468DDD003CC970 /* GameConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -183,7 +183,7 @@
 		E6E73A6822467E49003CC970 /* ambient.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ambient.mp3; sourceTree = "<group>"; };
 		E6E73A6B22467FFE003CC970 /* crashThud.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = crashThud.mp3; sourceTree = "<group>"; };
 		E6E73A74224684DB003CC970 /* SandStorm.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SandStorm.sks; sourceTree = "<group>"; };
-		E6E73A7A22468DDD003CC970 /* GameZPositions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameZPositions.swift; sourceTree = "<group>"; };
+		E6E73A7A22468DDD003CC970 /* GameConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -342,7 +342,7 @@
 				960FFD83223A77DD001750E8 /* LiveViewController_1_1.swift */,
 				960FFD85223A7898001750E8 /* LiveViewController_1_2.swift */,
 				960FFD87223A789F001750E8 /* LiveViewController_1_3.swift */,
-				E6E73A7A22468DDD003CC970 /* GameZPositions.swift */,
+				E6E73A7A22468DDD003CC970 /* GameConstants.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -559,7 +559,7 @@
 				E6E538E022442B890074A197 /* GameScene.swift in Sources */,
 				E6E538EA224526D20074A197 /* StartGameScene.swift in Sources */,
 				E6E73A60224679A6003CC970 /* Sounds.swift in Sources */,
-				E6E73A7B22468DDD003CC970 /* GameZPositions.swift in Sources */,
+				E6E73A7B22468DDD003CC970 /* GameConstants.swift in Sources */,
 				E6E538DC224401700074A197 /* EndGameScene.swift in Sources */,
 				5EA2E3C02056F35A00416A35 /* AppDelegate.swift in Sources */,
 			);
@@ -578,7 +578,7 @@
 				E6E73A61224679AD003CC970 /* Sounds.swift in Sources */,
 				960FFD86223A7898001750E8 /* LiveViewController_1_2.swift in Sources */,
 				960FFD88223A789F001750E8 /* LiveViewController_1_3.swift in Sources */,
-				E6E73A7C22468F95003CC970 /* GameZPositions.swift in Sources */,
+				E6E73A7C22468F95003CC970 /* GameConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
