@@ -24,31 +24,40 @@ import Foundation
 //"Do [...]."
 //)
 
-let true = true
-
 
 // Completion of user-entered code:
 //Use //#-code-completion syntax to allow only specified code to be entered by the user. (info here: https://developer.apple.com/documentation/swift_playgrounds/customizing_the_completions_in_the_shortcut_bar)
-func openEyes() -> <#return type#> {
-    <#function body#>
+
+func activateOpportunity() {
+    let message = "startGame"
+    do{try sendValue(.data(try NSKeyedArchiver.archivedData(withRootObject: message, requiringSecureCoding: false)))} catch {}
 }
 
 //#-end-hidden-code
 /*:
+ ### The Mission
+
  Opportunity also known as “Oppy” was launched into the space on July, 2003 and began its big 5 month and 18 days journay.
  
  At January, 2004 Oppy touched the surface of Mars in the Eagle crater and for the first time she opened her eyes.
  
  Now its your turn to take control of Oppy and finish the story….
-
- First open her eyes
+ 
+ >Note: If you have any visual impairments change the value below to true to enable accesibility mode.
  */
-//#-code-completion(everything, hide)
-//#-code-completion(everything, show, false, true)
-let eyeOpen = /*#-editable-code*/<#T##false##Bool#>/*#-end-editable-code*/
+//isAccesible = false
 /*:
- [Skip to the end](@next)
+ **Before you start** here are some information about your mission.
+ **Your Objectives:**
+ - Survive
+ - Collect as many minerals and soil samples as roverly possible.
+ - Avoid hiting rocks.
+ - Don't let your energy drop below 0. Try catching the following Sun Orbs.
+ 
+![sunOrb](sunOrb.png)
+ 
+ **Activate Her!** [Skip to the end](@next)
 */
-
-
-
+//#-code-completion(everything, hide)
+//#-code-completion(everything, show, activateOpportunity)
+activateOpportunity()

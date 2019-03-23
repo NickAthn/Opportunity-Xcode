@@ -10,7 +10,10 @@ import SpriteKit
 import GameplayKit
 import PlaygroundSupport
 
-public class LiveViewController_1_2: LiveViewController{
+public class LiveViewController_1_2: LiveViewController, GameViewController{
+    var screenWidth: CGFloat!
+    var screenHeight: CGFloat!
+
    // let gameScene = GameScene(fileNamed: "GameScene")
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator){
         
@@ -25,36 +28,33 @@ public class LiveViewController_1_2: LiveViewController{
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "mars")!)
-        
-        //PlaygroundPage.current.liveView.
-//        1050 1472
-        
-        //let gameView = SKView(frame: CGRect(x: 0, y: 0, width: 1050, height: 14))
-        startGame()
-    }
-    
-    public func startGame() {
-        var screenWidth: CGFloat!
-        var screenHeight: CGFloat!
-
         if view.frame.width > view.frame.height { // Landscape
             screenWidth = view.frame.width/2
             screenHeight = view.frame.height
         } else { // Portrait
             screenWidth = view.frame.height/2
             screenHeight = view.frame.width
-
         }
-        
+
+        let scene = StartGameScene(size: CGSize(width: screenWidth, height: screenHeight), viewController: self)
+        let skView = view as! SKView
+        skView.ignoresSiblingOrder = true
+        scene.scaleMode = .resizeFill
+        skView.presentScene(scene)
+        //let gameView = SKView(frame: CGRect(x: 0, y: 0, width: 1050, height: 1472))
+    }
+    
+    public func startGame() {
         let scene = GameScene(size: CGSize(width: screenWidth*2, height: screenHeight*2))
         let skView = view as! SKView
-        skView.showsFPS = true
-        skView.showsNodeCount = true
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .aspectFit
-        //skView.presentScene(scene)
-        skView.presentScene(scene, transition: SKTransition.doorsOpenVertical(withDuration: 10))
+        skView.presentScene(scene, transition: SKTransition.doorsOpenVertical(withDuration: 3))
+    }
+    func connect() {
+        let skView = view as! SKView
+        let currentScene = skView.scene as? StartGameScene
+        currentScene?.connect()
     }
     override public var shouldAutorotate: Bool {
         return true
@@ -69,16 +69,14 @@ public class LiveViewController_1_2: LiveViewController{
     }
     
     override public func receive(_ message: PlaygroundValue) {
-        //        Uncomment the following to be able to receive messages from the Contents.swift playground page. You will need to define the type of your incoming object and then perform any actions with it.
-//        
-//                guard case .data(let messageData) = message else { return }
-//                do { if let incomingObject = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(messageData) as? /*TypeOfYourObject*/ {
-//        
-//                        //do something with the incoming object from the playground page here
-//        
-//                    }
-//                } catch let error { fatalError("\(error) Unable to receive the message from the Playground page") }
-//        
+        guard case .data(let messageData) = message else { return }
+        do { if let incomingObject = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(messageData) as? String {
+            if incomingObject == "startGame" {
+                connect()
+            }
+            
+            }
+        } catch let error { fatalError("\(error) Unable to receive the message from the Playground page") }
     }
 }
 

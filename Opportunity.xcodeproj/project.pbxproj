@@ -40,6 +40,7 @@
 		E66161C52241993200AE107E /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66161B3224194ED00AE107E /* GameScene.swift */; };
 		E69FCB25223F023C002C5C09 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B2EFD1223EFE2D00687B88 /* art.scnassets */; };
 		E6B2EFD2223EFE2D00687B88 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = E6B2EFD1223EFE2D00687B88 /* art.scnassets */; };
+		E6C441742245B52700BC88F2 /* StartGameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = E6C441732245B52700BC88F2 /* StartGameScene.sks */; };
 		E6E538DB224401700074A197 /* EndGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E538DA224401700074A197 /* EndGameScene.swift */; };
 		E6E538DC224401700074A197 /* EndGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E538DA224401700074A197 /* EndGameScene.swift */; };
 		E6E538DE224402570074A197 /* EndGameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = E6E538DD224402570074A197 /* EndGameScene.sks */; };
@@ -156,6 +157,7 @@
 		E66161B3224194ED00AE107E /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		E66161B5224194EE00AE107E /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		E6B2EFD1223EFE2D00687B88 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
+		E6C441732245B52700BC88F2 /* StartGameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartGameScene.sks; sourceTree = "<group>"; };
 		E6E538DA224401700074A197 /* EndGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameScene.swift; sourceTree = "<group>"; };
 		E6E538DD224402570074A197 /* EndGameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EndGameScene.sks; sourceTree = "<group>"; };
 		E6E538E422451C310074A197 /* crash.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = crash.mp3; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 				E6E538E722451CB20074A197 /* Sound */,
 				E66161B5224194EE00AE107E /* GameScene.sks */,
 				E6E538DD224402570074A197 /* EndGameScene.sks */,
+				E6C441732245B52700BC88F2 /* StartGameScene.sks */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				960FFD7A223A67E8001750E8 /* LiveView_1_2.storyboard in Resources */,
 				9686CA0222391AE600E56BAB /* PublicResources in Resources */,
 				E64E27E822406C70004B1ED0 /* Reactor.scnp in Resources */,
+				E6C441742245B52700BC88F2 /* StartGameScene.sks in Resources */,
 				960FFD7B223A67E8001750E8 /* LiveView_1_3.storyboard in Resources */,
 				960FFDB5223D8A40001750E8 /* Assets.xcassets in Resources */,
 			);

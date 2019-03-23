@@ -68,13 +68,16 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     var satellite = SKSpriteNode()
     
     let gameTime = 60
+    var gameSpeed: CGFloat = 15
+    
+    var maxTime = 1.8
+    var minTime = 0.8
     public func startGame(){
         Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
     }
     
     
     override public func didMove(to view: SKView) {
-
         //background.zPosition = 0
         background.position = CGPoint(x: 0, y: 0 )
         background.yScale = 2
@@ -87,7 +90,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         physicsWorld.contactDelegate = self
         
         startGame()
-        Timer.scheduledTimer(timeInterval: Double.random(in: 1...1.8), target: self, selector: #selector(GameScene.traffic), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: Double.random(in: minTime...maxTime), target: self, selector: #selector(GameScene.traffic), userInfo: nil, repeats: true)
         Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(GameScene.removeItems), userInfo: nil, repeats: true)
         
         let deadTime = DispatchTime.now() + 1
@@ -122,7 +125,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         let fadeWhite = SKAction.colorize(with: .white, colorBlendFactor: 1, duration: 0.5)
         energyLabel.run(SKAction.repeat(SKAction.sequence([fadeGreen, fadeWhite]), count: 1), withKey: "colorChange")
         energyOrb.removeFromParent()
-
+        addEnergy()
     }
     func roverDidCollideWithRock(rover: SKSpriteNode, rock: SKSpriteNode) {
         isHit = true
@@ -362,11 +365,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     func throwProjectiles(){
         enumerateChildNodes(withName: "rock", using: { (rover, stop) in
             let rover = rover as! SKSpriteNode
-            rover.position.y -= 15
+            rover.position.y -= self.gameSpeed
         })
         enumerateChildNodes(withName: "energyOrb", using: { (rover, stop) in
             let rover = rover as! SKSpriteNode
-            rover.position.y -= 10
+            rover.position.y -= self.gameSpeed-5
         })
     }
 
@@ -391,10 +394,10 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         energy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         energy.zPosition = 10
 
-        let viewMaxX = view?.frame.maxX ?? 0
-        
-        let maxLeftValue = Int(-(viewMaxX)) + 50
-        let maxRightValue = Int(viewMaxX) - 50
+        let viewMaxX = (view?.frame.size.width)!/2
+
+        let maxLeftValue = Int(-(viewMaxX))
+        let maxRightValue = Int(viewMaxX)
         let randomPosition = GKRandomDistribution(lowestValue: maxLeftValue , highestValue: maxRightValue)
         let position = CGFloat(randomPosition.nextInt())
         energy.position = CGPoint(x: position, y: self.frame.size.height + energy.size.height)
@@ -412,10 +415,10 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         let rock = SKSpriteNode(imageNamed: possibleRocks.first!)
         rock.name = "rock"
         
-        let viewMaxX = view?.frame.maxX ?? 0
+        let viewMaxX = (view?.frame.size.width)!/2
         
-        let maxLeftValue = Int(-(viewMaxX)) + 50
-        let maxRightValue = Int(viewMaxX) - 50
+        let maxLeftValue = Int(-(viewMaxX))
+        let maxRightValue = Int(viewMaxX)
         let randomPosition = GKRandomDistribution(lowestValue: maxLeftValue , highestValue: maxRightValue)
         let position = CGFloat(randomPosition.nextInt())
         rock.position = CGPoint(x: position, y: self.frame.size.height + rock.size.height)
@@ -466,7 +469,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     }
 
     func addEnergy(){
-        energy += 5
+        energy += 8
     }
     
     func loseEnergyWith(amount: Int){
@@ -504,6 +507,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         if !stopEverything{
             score += 1
             scoreLabel.text = String(score)
+            if score == 5 || score == 8 || score == 10 || score == 13 || score == 14 {
+                gameSpeed += 3
+                maxTime -= 2
+                minTime -= 1
+            }
         }
     }
 
