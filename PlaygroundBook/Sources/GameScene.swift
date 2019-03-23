@@ -28,7 +28,8 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     
     // Background Image
     var background = SKSpriteNode(imageNamed: "MarsMap")
-    
+    let backgroundSound = SKAudioNode(fileNamed: Sounds.ambient)
+    let backgroundEmitter = SKEmitterNode(fileNamed: "Rain.sks")
     // Rover and its Properties
     var rover = SKSpriteNode()
     var isHit = false
@@ -61,10 +62,13 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     var minTime = 0.8
     public func startGame(){
         Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
+        addChild(backgroundSound)
+        backgroundSound.autoplayLooped = true
     }
     
     
     override public func didMove(to view: SKView) {
+        
         //background.zPosition = 0
         background.position = CGPoint(x: 0, y: 0 )
         background.yScale = 2
@@ -72,6 +76,13 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         
         //scene?.backgroundColor = UIColor(patternImage: UIImage(named: "MarsMap")!)
         addChild(background)
+       
+        // TODO: Make into a sandstorm
+        backgroundEmitter?.zPosition = 9
+        backgroundEmitter?.position = CGPoint(x: 0, y: view.frame.maxY)
+        backgroundEmitter?.particlePositionRange = CGVector(dx: view.frame.width*2, dy: 0)
+        //addChild(backgroundEmitter!)
+        
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         setUp()
         physicsWorld.contactDelegate = self
@@ -108,6 +119,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         }
     }
     func roverDidCollideWithEnergyOrb(rover: SKSpriteNode, energyOrb: SKSpriteNode) {
+        self.run(SKAction.playSoundFileNamed(Sounds.charge, waitForCompletion: false))
         let fadeGreen = SKAction.colorize(with: .green, colorBlendFactor: 1, duration: 0.5)
         let fadeWhite = SKAction.colorize(with: .white, colorBlendFactor: 1, duration: 0.5)
         energyLabel.run(SKAction.repeat(SKAction.sequence([fadeGreen, fadeWhite]), count: 1), withKey: "colorChange")
@@ -125,7 +137,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         rover.run(animation, completion: {
             self.isHit = false
         })
-        self.run(SKAction.playSoundFileNamed("crash.mp3", waitForCompletion: false))
+        self.run(SKAction.playSoundFileNamed(Sounds.crash, waitForCompletion: false))
         rock.removeFromParent()
     }
     
@@ -205,6 +217,8 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     }
     
     func addIncomingTransmission(text: String){
+        self.run(SKAction.playSoundFileNamed(Sounds.incomingTransmission, waitForCompletion: false))
+
         let transmissionLabel = SKLabelNode(text: "")
         transmissionLabel.text = text
         transmissionLabel.horizontalAlignmentMode = .left
@@ -411,6 +425,8 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         energy.physicsBody?.collisionBitMask = 0
         energy.physicsBody?.affectedByGravity = false
         energy.physicsBody?.usesPreciseCollisionDetection = true
+        
+        energy.addGlow(radius: 60)
         addChild(energy)
     }
     func addRock(){
@@ -572,5 +588,16 @@ extension SKLabelNode{
             }
         }
         block()
+    }
+}
+
+extension SKSpriteNode {
+    
+    func addGlow(radius: Float = 30) {
+        let effectNode = SKEffectNode()
+        effectNode.shouldRasterize = true
+        addChild(effectNode)
+        effectNode.addChild(SKSpriteNode(texture: texture))
+        effectNode.filter = CIFilter(name: "CIGaussianBlur", parameters: ["inputRadius":radius])
     }
 }
