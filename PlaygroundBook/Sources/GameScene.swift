@@ -472,7 +472,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     }
 
     func addEnergy(){
-        energy += 8
+        if energy + 8 > 100 {
+            energy = 100
+        } else {
+            energy += 8
+        }
     }
     
     func loseEnergyWith(amount: Int){

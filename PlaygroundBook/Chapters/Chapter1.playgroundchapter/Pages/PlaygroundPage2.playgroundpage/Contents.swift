@@ -12,6 +12,10 @@ import Foundation
 //Use the call below to send a message with an object to the LiveView of this page. Import Foundation is required.
 //sendValue(.data(try NSKeyedArchiver.archivedData(withRootObject: /*YourObject*/, requiringSecureCoding: true)))
 
+//enum Boolean {
+//    case `true`
+//    case `false`
+//}
 
 
 //Give hints and final solution:
@@ -46,8 +50,8 @@ var isAccesible = false
  >If you have any visual impairments change the value below to true to enable accesibility mode. With accesibility mode all entities will have a big indication in the middles making the identification easier. (R = Rock) (E = Energy)
  */
 //#-code-completion(everything, hide)
-//#-code-completion(literal, show, true, false)
-isAccesible = /*#-editable-code false*/false/*#-end-editable-code*/
+//#-code-completion(literal, show, true)
+isAccesible = /*#-editable-code*/false/*#-end-editable-code*/
 /*:
  **Before you start** here are some information about your mission.
  **Your Objectives:**
@@ -56,8 +60,11 @@ isAccesible = /*#-editable-code false*/false/*#-end-editable-code*/
  - Avoid hiting rocks.
  - Don't let your energy drop below 0. Try catching the following Sun Orbs.
  
-![sunOrb](sunOrb.png)
+ - Sun Orb:
+    ![sunOrb](sunOrb.png)
  
  **Activate Her!** [Skip to the end](@next)
 */
-activateOpportunity()
+//#-code-completion(everything, hide)
+//#-code-completion(identifier, show, activateOpportunity())
+/*#-editable-code Tap to enter code*//*#-end-editable-code*/
