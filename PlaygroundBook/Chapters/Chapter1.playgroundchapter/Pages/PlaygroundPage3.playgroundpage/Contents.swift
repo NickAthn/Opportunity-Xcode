@@ -38,7 +38,7 @@ import Foundation
 
 Our beloved little Oppy was the rover to hit a world record, she was created to last 90 days but that wasnt the case. Oppy was hungry to live and explore and she did everything in her power to stay alive.
 
-She stayed operational for 15 year! Thats 60 times more than what she was created for.
+She stayed operational for 15 year and travelled more than 45km(28miles)! Thats 60 times more than what she was created for.
 
 Sadly every story has to come to an end, so does this. Opportunity sent her last signal at June 10, when a heavy dust storm hit Mars, she went to sleep hoping she will wait out the storm.
 

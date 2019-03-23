@@ -12,18 +12,6 @@ import SpriteKit
 import GameplayKit
 import AudioToolbox
 
-
-public enum Side: Int {
-    case left = -300
-    case middle = 0
-    case right = 300
-}
-public enum Move: Int {
-    case left
-    case right
-    case stay
-}
-
 public enum State {
     case lost
     case won
@@ -57,7 +45,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
 
     // Score Label
     var scoreLabel = SKLabelNode()
-    var score = 0
+    var year = 2004
 
     // Lives Label
     let energyLabel = SKLabelNode()
@@ -67,9 +55,8 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     var currentTransmissions: [SKLabelNode] = []
     var satellite = SKSpriteNode()
     
-    let gameTime = 60
+    let gameTime = 100
     var gameSpeed: CGFloat = 15
-    
     var maxTime = 1.8
     var minTime = 0.8
     public func startGame(){
@@ -95,7 +82,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         
         let deadTime = DispatchTime.now() + 1
         DispatchQueue.main.asyncAfter(deadline: deadTime) {
-            Timer.scheduledTimer(timeInterval: TimeInterval(self.gameTime/15), target: self, selector: #selector(GameScene.increaseScore), userInfo: nil, repeats: true)
+            Timer.scheduledTimer(timeInterval: TimeInterval(self.gameTime/15), target: self, selector: #selector(GameScene.incrementYear), userInfo: nil, repeats: true)
             Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(GameScene.loseEnergy), userInfo: nil, repeats: true)
 
         }
@@ -193,12 +180,28 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     }
     
     override public func update(_ currentTime: TimeInterval) {
-        if score == 15 && energy > 0 {
+        if year == 2018 && energy > 0 {
             endGame(state: State.won)
         } else if energy == 0 {
             endGame(state: State.lost)
         }
         throwProjectiles()
+    }
+    
+    func transmissionManager() {
+        switch year {
+        case 2004: addIncomingTransmission(text: "You just landed on the Eagle crater of Mars")
+        case 2005: addIncomingTransmission(text: "Whats that? You find a meteorite! It's name? Heat Shield Rock.")
+        case 2007: addIncomingTransmission(text: "NEW FIRMWARE! Both you and your brother Spirit were just updated!")
+        case 2008: addIncomingTransmission(text: "Dust Storm Incoming. Sadly we will have to enter into radio silence to save energy. Good luck Rovers.")
+        case 2010: addIncomingTransmission(text: "Spirit is not answering.")
+        case 2011: addIncomingTransmission(text: "Oppy, sadly your brother is lost or....you are now alone.")
+        case 2012: addIncomingTransmission(text: "Good News. We a sent a new rover to your way named Curiosity. Say hey!")
+        case 2014: addIncomingTransmission(text: "Op#F#$R HE#R DSodyma#R $....MEMORY MALFUNCTION!")
+        case 2015: addIncomingTransmission(text: "Happy 13 years anniversary!")
+        case 2018: addIncomingTransmission(text: "Dust Storm Incoming...")
+        default: break
+        }
     }
     
     func addIncomingTransmission(text: String){
@@ -235,7 +238,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
 
         currentTransmissions.append(transmissionLabel)
         
-        transmissionLabel.startTyping(0.1) {
+        transmissionLabel.startTyping(0.01) {
             transmissionLabel.run(SKAction.sequence([SKAction.wait(forDuration: 5),SKAction.fadeOut(withDuration: 1)]))
         }
         
@@ -275,7 +278,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
 
         let staticScoreLabel = SKLabelNode()
         staticScoreLabel.fontName = "AvenirNext-Bold"
-        staticScoreLabel.text = "Years"
+        staticScoreLabel.text = "Year"
         staticScoreLabel.fontColor = SKColor.white
         staticScoreLabel.position = CGPoint(x: -self.size.width/2 + 160, y: self.size.height/2 - 110)
         staticScoreLabel.fontSize = 50
@@ -285,7 +288,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
 
         scoreLabel.name = "score"
         scoreLabel.fontName = "AvenirNext-Bold"
-        scoreLabel.text = "0"
+        scoreLabel.text = "2004"
         scoreLabel.fontColor = SKColor.white
         scoreLabel.position = CGPoint(x: -self.size.width/2 + 160, y: staticScoreLabel.position.y - 70)
         scoreLabel.fontSize = 50
@@ -331,7 +334,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         satellite.colorBlendFactor = 1
         satellite.color = .white
         addChild(satellite)
-
+        transmissionManager()
     }
 
 
@@ -394,7 +397,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         energy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         energy.zPosition = 10
 
-        let viewMaxX = (view?.frame.size.width)!/2
+        let viewMaxX = (view?.frame.size.width ?? 0)/2
 
         let maxLeftValue = Int(-(viewMaxX))
         let maxRightValue = Int(viewMaxX)
@@ -415,7 +418,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         let rock = SKSpriteNode(imageNamed: possibleRocks.first!)
         rock.name = "rock"
         
-        let viewMaxX = (view?.frame.size.width)!/2
+        let viewMaxX = (view?.frame.size.width ?? 0)/2
         
         let maxLeftValue = Int(-(viewMaxX))
         let maxRightValue = Int(viewMaxX)
@@ -503,15 +506,19 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         }
     }
     
-    @objc func increaseScore(){
+    @objc func incrementYear(){
         if !stopEverything{
-            score += 1
-            scoreLabel.text = String(score)
-            if score == 5 || score == 8 || score == 10 || score == 13 || score == 14 {
-                gameSpeed += 3
-                maxTime -= 2
-                minTime -= 1
-            }
+            year += 1
+            scoreLabel.text = String(year)
+            transmissionManager()
+        }
+    }
+    
+    func difficulty() {
+        if year == 2019 || year == 2012 || year == 2014 || year == 2015 || year == 2016 {
+            gameSpeed += 3
+            maxTime -= 2
+            minTime -= 1
         }
     }
 

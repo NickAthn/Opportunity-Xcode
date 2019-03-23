@@ -32,7 +32,7 @@ func activateOpportunity() {
     let message = "startGame"
     do{try sendValue(.data(try NSKeyedArchiver.archivedData(withRootObject: message, requiringSecureCoding: false)))} catch {}
 }
-
+var isAccesible = false
 //#-end-hidden-code
 /*:
  ### The Mission
@@ -43,9 +43,11 @@ func activateOpportunity() {
  
  Now its your turn to take control of Oppy and finish the story….
  
- >Note: If you have any visual impairments change the value below to true to enable accesibility mode.
+ >If you have any visual impairments change the value below to true to enable accesibility mode. With accesibility mode all entities will have a big indication in the middles making the identification easier. (R = Rock) (E = Energy)
  */
-//isAccesible = false
+//#-code-completion(everything, hide)
+//#-code-completion(literal, show, true, false)
+isAccesible = /*#-editable-code false*/false/*#-end-editable-code*/
 /*:
  **Before you start** here are some information about your mission.
  **Your Objectives:**
@@ -58,6 +60,4 @@ func activateOpportunity() {
  
  **Activate Her!** [Skip to the end](@next)
 */
-//#-code-completion(everything, hide)
-//#-code-completion(everything, show, activateOpportunity)
 activateOpportunity()

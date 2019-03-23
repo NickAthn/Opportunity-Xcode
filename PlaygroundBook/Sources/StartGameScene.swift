@@ -45,7 +45,7 @@ public class StartGameScene: SKScene {
         nextLabel.text = "connect -i Opportunity"
         addChild(nextLabel)
 
-        nextLabel.startTyping(0.1, completion: nil)
+        nextLabel.startTyping(0.01, completion: nil)
         connect()
     }
     public init(size: CGSize, viewController: GameViewController) {
@@ -71,7 +71,7 @@ public class StartGameScene: SKScene {
         lastLabel.position.y = nextLabel.position.y - 18
         lastLabel.text = "Connecting...\nConnection Succesfull!\nAccesibilityMode: False\nPowerOn: True\nPlanet: Mars\n➜  ~ Activate Opportunity\n...................................................................................................."
         self.addChild(lastLabel)
-        lastLabel.startTyping(0.05, completion: {
+        lastLabel.startTyping(0.02, completion: {
             self.viewController?.startGame()
         })
     }
