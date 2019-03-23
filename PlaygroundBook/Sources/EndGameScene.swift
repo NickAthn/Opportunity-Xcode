@@ -19,8 +19,6 @@ class EndGameScene: SKScene{
         self.state = state
     }
     override func didMove(to view: SKView) {
-//        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-//        startGame = self.childNode(withName: "startGame") as! SKLabelNode
         centerLabel = SKLabelNode()
         if #available(iOS 11.0, *) {centerLabel.preferredMaxLayoutWidth = view.frame.size.width - 50} else {}
         if #available(iOS 11.0, *) {centerLabel.numberOfLines = 0} else {}

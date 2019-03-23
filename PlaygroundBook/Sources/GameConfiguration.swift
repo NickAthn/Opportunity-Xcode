@@ -14,7 +14,10 @@ public struct Game {
             static let bold = "HelveticaNeue-Bold"
         }
     }
+    
     public struct PositionZ {
+        static let topLevel: CGFloat = 20
+        
         static let userInterface: CGFloat = 15
         static let userInterfaceBackground: CGFloat = 14
 

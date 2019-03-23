@@ -562,14 +562,28 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
             minTime -= 1
         }
     }
+    
+    func dimScreen(in time: TimeInterval){
+        let dimPanel = SKSpriteNode(color: UIColor.black, size: background.size)
+        dimPanel.alpha = 0
+        dimPanel.zPosition = Game.PositionZ.topLevel
+        dimPanel.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+        self.addChild(dimPanel)
+        
+        dimPanel.run(SKAction.fadeAlpha(to: 1, duration: time))
+
+    }
 
     func endGame(state: End){
         let endScene = EndGameScene(fileNamed: "EndGameScene.sks", state: state)!
         if state == .won {
-                addSandstorm()
-                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(30), execute: {
-                    self.view?.presentScene(endScene, transition: SKTransition.crossFade(withDuration: 1))
-                })
+            addSandstorm(for: 35)
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(15), execute: {
+                self.dimScreen(in: 5)
+            })
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(20), execute: {
+                self.view?.presentScene(endScene, transition: SKTransition.crossFade(withDuration: 1))
+            })
 
         } else if state == .crashed {
             view?.presentScene(endScene, transition: SKTransition.crossFade(withDuration: 1))
