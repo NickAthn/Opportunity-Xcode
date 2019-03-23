@@ -65,8 +65,8 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     
     let gameTime = 120
     var gameSpeed: CGFloat = 15
-    var maxTime = 1.8
-    var minTime = 0.8
+    var maxTime = 0.8
+    var minTime = 0.3
     public func startGame(){
         Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
         addChild(backgroundSound)
@@ -75,7 +75,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     
     
     override public func didMove(to view: SKView) {
-        addSandstorm()
         background.zPosition = Game.PositionZ.background
         background.position = CGPoint(x: 0, y: 0 )
         background.yScale = 2
@@ -97,7 +96,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         let deadTime = DispatchTime.now() + 1
         DispatchQueue.main.asyncAfter(deadline: deadTime) {
             Timer.scheduledTimer(timeInterval: TimeInterval(self.gameTime/15), target: self, selector: #selector(GameScene.incrementYear), userInfo: nil, repeats: true)
-            Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(GameScene.loseEnergy), userInfo: nil, repeats: true)
+            Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.loseEnergy), userInfo: nil, repeats: true)
 
         }
     }
@@ -165,7 +164,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         for touch in touches{
             if touch.tapCount > 1 {
                 print("fire")
-                fireProjectile()
             }
             let touchLocation = touch.location(in: self)
             moveRover(to: touchLocation)
@@ -176,21 +174,23 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     
     func moveRover(to location: CGPoint){
         let distance =  abs((Double(location.x - rover.position.x)))
-        let speed: Double = 600
+        let distanceY = abs((Double(location.y - rover.position.y)))
+        let speed: Double = 900
         if location.x > (self.size.width)/2 || location.x < -((self.size.width)/2) {
-            
         } else {
-        let move = SKAction.moveTo(x: location.x, duration: distance/speed)
+            let move = SKAction.moveTo(x: location.x, duration: distance/speed)
+            let moveUp = SKAction.moveTo(y: location.y, duration: distanceY/speed)
             
-            // Move Player with steady speed of "speed" points
-    //        if location.x - rover.position.x > 0 {
-    //            rover.run(SKAction.rotate(toAngle: -0.5, duration: 0.5))
-    //        } else {
-    //            rover.run(SKAction.rotate(toAngle: 0.5, duration: 0.5))
-    //        }
-            rover.run(move) {
-    //            self.rover.run(SKAction.rotate(toAngle: 0, duration: 0.5), withKey: "still")
+//             Move Player with steady speed of "speed" points
+            if location.x - rover.position.x > 0 {
+                rover.run(SKAction.rotate(toAngle: -0.5, duration: 0.5))
+            } else {
+                rover.run(SKAction.rotate(toAngle: 0.5, duration: 0.5))
             }
+            rover.run(move) {
+                self.rover.run(SKAction.rotate(toAngle: 0, duration: 0.5), withKey: "still")
+            }
+            rover.run(moveUp)
         }
     }
     
@@ -278,16 +278,46 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     // MARK: - Setting up view
     func setUp(){
         rover = SKSpriteNode(imageNamed: "rover")
-        rover.xScale = 0.75
-        rover.yScale = 0.75
+        rover.xScale = 0.70
+        rover.yScale = 0.70
         rover.name = "rover"
         rover.zPosition = Game.PositionZ.actors
         rover.position.x = 0
         rover.position.y = self.frame.minY + rover.size.height + 30
-        rover.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: rover.size.width, height: rover.size.height))
+        
+        let offsetX: CGFloat = rover.frame.size.width * rover.anchorPoint.x
+        let offsetY: CGFloat = rover.frame.size.height * rover.anchorPoint.y
+        
+        let path = CGMutablePath()
+        
+        path.move(to: CGPoint(x: 77 - offsetX, y: 120 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 92 - offsetX, y: 120 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 129 - offsetX, y: 118 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 134 - offsetX, y: 115 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 151 - offsetX, y: 87 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 171 - offsetX, y: 53 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 173 - offsetX, y: 47 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 170 - offsetX, y: 40 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 158 - offsetX, y: 16 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 106 - offsetX, y: 1 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 67 - offsetX, y: 1 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 15 - offsetX, y: 16 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 5 - offsetX, y: 34 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 0 - offsetX, y: 47 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 2 - offsetX, y: 53 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 22 - offsetX, y: 87 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 39 - offsetX, y: 116 - offsetY), transform: .identity)
+        path.addLine(to: CGPoint(x: 50 - offsetX, y: 120 - offsetY), transform: .identity)
+
+        path.closeSubpath()
+        
+        rover.physicsBody = SKPhysicsBody(polygonFrom: path)
+
+//        rover.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: rover.size.width, height: rover.size.height))
         rover.physicsBody?.usesPreciseCollisionDetection = true
         rover.physicsBody?.isDynamic = true
         rover.physicsBody?.affectedByGravity = false
+    
         
         
         centerPoint = self.frame.size.width / self.frame.size.height
@@ -466,35 +496,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         
         rock.run(SKAction.rotate(byAngle:CGFloat(GKRandomDistribution.init(lowestValue: -10, highestValue: 10).nextInt()), duration: 10))
     }
-    func fireProjectile() {
-        self.run(SKAction.playSoundFileNamed("fireProjectile.mp3", waitForCompletion: false))
-        
-        let projectile = SKSpriteNode(imageNamed: "projectile")
-        projectile.position = rover.position
-        projectile.position.y += 5
-        projectile.name = "projectile"
-        
-        projectile.physicsBody = SKPhysicsBody(circleOfRadius: projectile.size.width / 2)
-        projectile.physicsBody?.isDynamic = true
-        
-        projectile.physicsBody?.categoryBitMask = ColliderType.ITEM_COLLIDER_1
-        projectile.physicsBody?.contactTestBitMask = ColliderType.ITEM_COLLIDER
-        projectile.physicsBody?.collisionBitMask = 0
-        projectile.physicsBody?.usesPreciseCollisionDetection = true
-        
-        self.addChild(projectile)
-        
-        let animationDuration:TimeInterval = 0.3
-        
-        
-        var actionArray = [SKAction]()
-        
-        actionArray.append(SKAction.move(to: CGPoint(x: rover.position.x, y: self.frame.size.height + 10), duration: animationDuration))
-        actionArray.append(SKAction.removeFromParent())
-        
-        projectile.run(SKAction.sequence(actionArray))
-    }
-
     func addEnergy(){
         if energy + 8 > 100 {
             energy = 100
@@ -516,15 +517,15 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
 
     }
     @objc func loseEnergy(){
-//        if state == .freezed{
-//            let valueToDecrease = (100/(gameTime)) // GameTime/ THe amout of time the user will finish his power
-//            if energy - valueToDecrease < 0 || energy == 0{ // END GAME
-//                energy = 0
-//            } else {
-//                energy -= valueToDecrease
-//            }
-//            energyLabel.text = "\(energy)%"
-//        }
+        if state == .freezed{
+            let valueToDecrease = (100/(gameTime)) // GameTime/ THe amout of time the user will finish his power
+            if energy - valueToDecrease < 0 || energy == 0{ // END GAME
+                energy = 0
+            } else {
+                energy -= valueToDecrease
+            }
+            energyLabel.text = "\(energy)%"
+        }
     }
     
     @objc func removeItems(){
