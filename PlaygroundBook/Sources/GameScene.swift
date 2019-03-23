@@ -18,6 +18,11 @@ public enum End {
     case won
 }
 
+public enum GameState {
+    case ending
+    case active
+    case freezed
+}
 
 protocol CanReceiveTransitionEvents {
     func viewWillTransition(to size: CGSize)
@@ -31,7 +36,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     // Background Image
     var background = SKSpriteNode(imageNamed: "marsMap")
     let backgroundSound = SKAudioNode(fileNamed: Sounds.ambient)
-    let sandStormEmmiter = SKEmitterNode(fileNamed: "SandStorm.sks")
     // Rover and its Properties
     var rover = SKSpriteNode()
     var isHit = false
@@ -39,6 +43,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     var canMove = false
     var centerPoint : CGFloat!
     
+    var state: GameState = .freezed
     
     var countDown = 1
     var stopEverything = true
@@ -58,7 +63,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     var currentTransmissions: [SKLabelNode] = []
     var satellite = SKSpriteNode()
     
-    let gameTime = 100
+    let gameTime = 120
     var gameSpeed: CGFloat = 15
     var maxTime = 1.8
     var minTime = 0.8
@@ -66,12 +71,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
         addChild(backgroundSound)
         backgroundSound.autoplayLooped = true
-        endGame(state: .won)
     }
     
     
     override public func didMove(to view: SKView) {
-        
+        addSandstorm()
         background.zPosition = Game.PositionZ.background
         background.position = CGPoint(x: 0, y: 0 )
         background.yScale = 2
@@ -79,11 +83,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         
         addChild(background)
         
-        sandStormEmmiter?.zPosition = Game.PositionZ.enviromentalChanges
-        sandStormEmmiter?.position = CGPoint(x: 0, y: view.frame.maxY)
-        sandStormEmmiter?.particlePositionRange = CGVector(dx: view.frame.width*2, dy: 0)
-        
-        let changeVolume = SKAction.changeVolume(to: 0.4, duration: 0.3)
+        let changeVolume = SKAction.changeVolume(to: 0.3, duration: 0)
         backgroundSound.run(changeVolume)
 
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -194,10 +194,15 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         }
     }
     
+    
+    // TODO: EVIL DOING MUST CHAGNE
+    var didFinish = false
     override public func update(_ currentTime: TimeInterval) {
-        if year == 2018 && energy > 0 {
+        if year == 2018 && energy > 0 && didFinish == false{
             endGame(state: End.won)
-        } else if energy == 0 {
+            didFinish = true
+        } else if energy == 0  && didFinish == false {
+            didFinish = true
             endGame(state: End.noEnergy)
         }
         throwProjectiles()
@@ -205,16 +210,16 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     
     func transmissionManager() {
         switch year {
-        case 2004: addIncomingTransmission(text: "You just landed on the Eagle crater of Mars")
-        case 2005: addIncomingTransmission(text: "Whats that? You find a meteorite! It's name? Heat Shield Rock.")
-        case 2007: addIncomingTransmission(text: "NEW FIRMWARE! Both you and your brother Spirit were just updated!")
-        case 2008: addIncomingTransmission(text: "Dust Storm Incoming. Sadly we will have to enter into radio silence to save energy. Good luck Rovers.")
-        case 2010: addIncomingTransmission(text: "Spirit is not answering.")
-        case 2011: addIncomingTransmission(text: "Oppy, sadly your brother is lost or....you are now alone.")
-        case 2012: addIncomingTransmission(text: "Good News. We a sent a new rover to your way named Curiosity. Say hey!")
-        case 2014: addIncomingTransmission(text: "Op#F#$R HE#R DSodyma#R $....MEMORY MALFUNCTION!")
-        case 2015: addIncomingTransmission(text: "Happy 13 years anniversary!")
-        case 2018: addIncomingTransmission(text: "Dust Storm Incoming...")
+        case 2004: addIncomingTransmission(text: Game.Transmissions.year[2004]!)
+        case 2005: addIncomingTransmission(text: Game.Transmissions.year[2005]!)
+        case 2007: addIncomingTransmission(text: Game.Transmissions.year[2007]!)
+        case 2008: addIncomingTransmission(text: Game.Transmissions.year[2008]!)
+        case 2010: addIncomingTransmission(text: Game.Transmissions.year[2010]!)
+        case 2011: addIncomingTransmission(text: Game.Transmissions.year[2011]!)
+        case 2012: addIncomingTransmission(text: Game.Transmissions.year[2012]!)
+        case 2014: addIncomingTransmission(text: Game.Transmissions.year[2014]!)
+        case 2015: addIncomingTransmission(text: Game.Transmissions.year[2015]!)
+        case 2018: addIncomingTransmission(text: Game.Transmissions.year[2018]!)
         default: break
         }
     }
@@ -377,7 +382,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
             }
             countDown += 1
             if countDown == 4 {
-                self.stopEverything = false
+                state = .active
             }
         }
     }
@@ -395,7 +400,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
 
     
     @objc func traffic(){
-        if !stopEverything {
+        if state != .freezed {
             let random = GKShuffledDistribution.d20()
             switch Int(random.nextInt()){
             case 1...5:
@@ -499,7 +504,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     }
     
     func loseEnergyWith(amount: Int){
-        if !stopEverything{
+        if state != .freezed{
             if energy - amount < 0 || energy == 0{ // END GAME
                 energy = 0
                 endGame(state: .crashed)
@@ -511,7 +516,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
 
     }
     @objc func loseEnergy(){
-//        if !stopEverything{
+//        if state == .freezed{
 //            let valueToDecrease = (100/(gameTime)) // GameTime/ THe amout of time the user will finish his power
 //            if energy - valueToDecrease < 0 || energy == 0{ // END GAME
 //                energy = 0
@@ -531,28 +536,41 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     }
     
     @objc func incrementYear(){
-        if !stopEverything{
+        if state == .active{
             year += 1
+            if year == 2008 {addSandstorm(for: 10)}
             scoreLabel.text = String(year)
             transmissionManager()
             difficulty()
         }
     }
     
-    func addSandstorm(for time: TimeInterval = 15){
-        let sandStorm = SKEmitterNode(fileNamed: "SandStorm.sks")!
+    func addSandstorm(for time: TimeInterval = 10){
+        let sandStorm = SKEmitterNode(fileNamed: "SandStorm")!
+
         sandStorm.zPosition = Game.PositionZ.enviromentalChanges
-        sandStorm.position = CGPoint(x: -40, y: (view?.frame.maxY ?? 0) + 40)
+        sandStorm.position = CGPoint(x: 0, y: (view?.frame.maxY ?? 0) + 60)
         sandStorm.particlePositionRange = CGVector(dx:((view?.frame.width)!)*2, dy: 0)
-        sandStorm.emissionAngle = 40
+//        sandStorm.emissionAngle = 0
         addChild(sandStorm)
 
         let wait = SKAction.wait(forDuration: time)
         let fadeOut = SKAction.fadeOut(withDuration: 5)
-        let remove = SKAction.removeFromParent()
         
-        sandStorm.run(SKAction.sequence([wait,fadeOut,remove]))
+        let soundNode = SKAudioNode(fileNamed: Sounds.storm)
+        soundNode.autoplayLooped = true
         
+        let setVolume = SKAction.changeVolume(to: 0, duration: 0)
+        let waitSound = SKAction.wait(forDuration: time-5)
+        let increaseVolume = SKAction.changeVolume(to: 1, duration: 5)
+        let decreaseVolume = SKAction.changeVolume(to: 0, duration: 5)
+        soundNode.run(SKAction.sequence([setVolume,increaseVolume,waitSound,decreaseVolume]))
+        addChild(soundNode)
+        
+        sandStorm.run(SKAction.sequence([wait,fadeOut])) {
+            sandStorm.removeFromParent()
+            soundNode.removeFromParent()
+        }
     }
     
     func difficulty() {
@@ -575,6 +593,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     }
 
     func endGame(state: End){
+        self.state = .ending
         let endScene = EndGameScene(fileNamed: "EndGameScene.sks", state: state)!
         if state == .won {
             addSandstorm(for: 35)
@@ -586,9 +605,15 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
             })
 
         } else if state == .crashed {
-            view?.presentScene(endScene, transition: SKTransition.crossFade(withDuration: 1))
+            self.dimScreen(in: 3)
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+                self.view?.presentScene(endScene, transition: SKTransition.crossFade(withDuration: 1))
+            })
         } else if state == .noEnergy {
-            view?.presentScene(endScene, transition: SKTransition.crossFade(withDuration: 1))
+            self.dimScreen(in: 3)
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3), execute: {
+                self.view?.presentScene(endScene, transition: SKTransition.crossFade(withDuration: 1))
+            })
 
         }
     }

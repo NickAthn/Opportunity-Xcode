@@ -30,7 +30,18 @@ public struct Game {
     }
     
     public struct Transmissions {
-        
+        static let year: [Int : String]! = [
+            2004 : "You just landed on the Eagle crater of Mars",
+            2005 : "You found a meteorite! It's name? Heat Shield Rock.",
+            2007 : "NEW FIRMWARE! Both you and your brother Spirit just got updated!",
+            2008 : "Dust Storm Incoming. Sadly we will have to enter into radio silence to save energy. Good luck Rovers.",
+            2010 : "Spirit is not answering.",
+            2011 : "Oppy, sadly your brother is lost....you are now alone.",
+            2012 : "Good News. We a sent a new rover to your way named Curiosity. Say hey!",
+            2014 : "Op#F#$R HE#R DSodyma#R $....MEMORY MALFUNCTION!",
+            2015 : "Happy 13 years anniversary!",
+            2018 : "Dust Storm Incoming."
+        ]
     }
     
     public struct Endings {

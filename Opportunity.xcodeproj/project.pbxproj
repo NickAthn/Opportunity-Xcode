@@ -66,6 +66,8 @@
 		E6E73A77224684DB003CC970 /* SandStorm.sks in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A74224684DB003CC970 /* SandStorm.sks */; };
 		E6E73A7B22468DDD003CC970 /* GameConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A7A22468DDD003CC970 /* GameConfiguration.swift */; };
 		E6E73A7C22468F95003CC970 /* GameConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A7A22468DDD003CC970 /* GameConfiguration.swift */; };
+		E6E73A7E2246D0BC003CC970 /* storm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A7D2246D0BC003CC970 /* storm.mp3 */; };
+		E6E73A7F2246D0BC003CC970 /* storm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A7D2246D0BC003CC970 /* storm.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -184,6 +186,7 @@
 		E6E73A6B22467FFE003CC970 /* crashThud.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = crashThud.mp3; sourceTree = "<group>"; };
 		E6E73A74224684DB003CC970 /* SandStorm.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SandStorm.sks; sourceTree = "<group>"; };
 		E6E73A7A22468DDD003CC970 /* GameConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConfiguration.swift; sourceTree = "<group>"; };
+		E6E73A7D2246D0BC003CC970 /* storm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = storm.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +373,7 @@
 		E6E538E722451CB20074A197 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				E6E73A7D2246D0BC003CC970 /* storm.mp3 */,
 				E6E73A6B22467FFE003CC970 /* crashThud.mp3 */,
 				E6E73A6822467E49003CC970 /* ambient.mp3 */,
 				E6E73A6522467C28003CC970 /* charge.mp3 */,
@@ -495,6 +499,7 @@
 				E6B2EFD2223EFE2D00687B88 /* art.scnassets in Resources */,
 				5EF2F97C2054B6E400191409 /* ManifestPlist.strings in Resources */,
 				5E086DCA2051DDAE004D8D25 /* LiveView.storyboard in Resources */,
+				E6E73A7E2246D0BC003CC970 /* storm.mp3 in Resources */,
 				960FFD7A223A67E8001750E8 /* LiveView_1_2.storyboard in Resources */,
 				9686CA0222391AE600E56BAB /* PublicResources in Resources */,
 				E64E27E822406C70004B1ED0 /* Reactor.scnp in Resources */,
@@ -521,6 +526,7 @@
 				E6E538E622451C320074A197 /* crash.mp3 in Resources */,
 				5EA2E3CA2056F35B00416A35 /* LiveViewTestAppLaunchScreen.storyboard in Resources */,
 				E6E538DE224402570074A197 /* EndGameScene.sks in Resources */,
+				E6E73A7F2246D0BC003CC970 /* storm.mp3 in Resources */,
 				960FFD89223A7A1B001750E8 /* LiveView_1_1.storyboard in Resources */,
 				E6E73A6A22467E49003CC970 /* ambient.mp3 in Resources */,
 				960FFD7D223A6BFD001750E8 /* LiveView_1_2.storyboard in Resources */,

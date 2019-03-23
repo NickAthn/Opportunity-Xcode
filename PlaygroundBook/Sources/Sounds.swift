@@ -13,4 +13,5 @@ public struct Sounds {
     static let incomingTransmission = "incomingTransmission.mp3"
     static let explode = ""
     static let ambient = "ambient.mp3"
+    static let storm = "storm.mp3"
 }
