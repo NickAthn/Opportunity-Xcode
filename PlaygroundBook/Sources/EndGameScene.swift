@@ -25,7 +25,7 @@ class EndGameScene: SKScene{
         centerLabel.position = CGPoint(x:CGRect.init().midX, y:CGRect.init().midY)
         centerLabel.horizontalAlignmentMode = .center
         centerLabel.verticalAlignmentMode = .center
-        centerLabel.fontName = Game.FontNames.helveticaNeue.bold
+        centerLabel.fontName = Game.FontNames.messageInterface
         centerLabel.fontColor = .white
         centerLabel.fontSize = 30
         addChild(centerLabel)

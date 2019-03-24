@@ -9,7 +9,7 @@ import UIKit
 import Foundation
 import PlaygroundSupport
 
-public class LiveViewController_1_3: LiveViewController {
+public class TheEnd: LiveViewController {
     @IBOutlet weak var consoleTextView: UITextView!
     
 //    let text = ""

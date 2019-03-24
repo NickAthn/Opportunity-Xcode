@@ -10,7 +10,7 @@ import Foundation
 import PlaygroundSupport
 import SceneKit
 
-public class LiveViewController_1_1: LiveViewController {
+public class TheLaunch: LiveViewController {
     let scnStarScene = SCNScene(named: "art.scnassets/StartParticleScene.scn")!
     let scnMarsScene = SCNScene(named: "art.scnassets/MarsScene.scn")!
     

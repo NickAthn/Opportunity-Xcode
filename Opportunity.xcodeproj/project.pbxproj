@@ -21,15 +21,12 @@
 		5EF2F9B72054E6FB00191409 /* Chapters in Copy Book Contents */ = {isa = PBXBuildFile; fileRef = 5EF2F9B62054E6F900191409 /* Chapters */; };
 		5EF2F9B82054E6FE00191409 /* Sources in Copy Book Contents */ = {isa = PBXBuildFile; fileRef = 5EF2F9A52054BBB200191409 /* Sources */; };
 		960FFD6A22394F56001750E8 /* LiveView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5E086DCC2051DDAE004D8D25 /* LiveView.storyboard */; };
-		960FFD7A223A67E8001750E8 /* LiveView_1_2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960FFD75223A67E8001750E8 /* LiveView_1_2.storyboard */; };
-		960FFD7B223A67E8001750E8 /* LiveView_1_3.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960FFD77223A67E8001750E8 /* LiveView_1_3.storyboard */; };
-		960FFD7D223A6BFD001750E8 /* LiveView_1_2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960FFD75223A67E8001750E8 /* LiveView_1_2.storyboard */; };
-		960FFD7E223A6C00001750E8 /* LiveView_1_3.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960FFD77223A67E8001750E8 /* LiveView_1_3.storyboard */; };
-		960FFD84223A77DD001750E8 /* LiveViewController_1_1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FFD83223A77DD001750E8 /* LiveViewController_1_1.swift */; };
-		960FFD86223A7898001750E8 /* LiveViewController_1_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FFD85223A7898001750E8 /* LiveViewController_1_2.swift */; };
-		960FFD88223A789F001750E8 /* LiveViewController_1_3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FFD87223A789F001750E8 /* LiveViewController_1_3.swift */; };
-		960FFD89223A7A1B001750E8 /* LiveView_1_1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960FFD73223A67E8001750E8 /* LiveView_1_1.storyboard */; };
-		960FFD8A223A7A1B001750E8 /* LiveView_1_1.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960FFD73223A67E8001750E8 /* LiveView_1_1.storyboard */; };
+		960FFD7A223A67E8001750E8 /* TheMission.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960FFD75223A67E8001750E8 /* TheMission.storyboard */; };
+		960FFD7B223A67E8001750E8 /* TheEnd.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960FFD77223A67E8001750E8 /* TheEnd.storyboard */; };
+		960FFD7D223A6BFD001750E8 /* TheMission.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960FFD75223A67E8001750E8 /* TheMission.storyboard */; };
+		960FFD7E223A6C00001750E8 /* TheEnd.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960FFD77223A67E8001750E8 /* TheEnd.storyboard */; };
+		960FFD89223A7A1B001750E8 /* TheLaunch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960FFD73223A67E8001750E8 /* TheLaunch.storyboard */; };
+		960FFD8A223A7A1B001750E8 /* TheLaunch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 960FFD73223A67E8001750E8 /* TheLaunch.storyboard */; };
 		960FFDB3223D8986001750E8 /* PublicResources in Resources */ = {isa = PBXBuildFile; fileRef = 9686CA0122391AE600E56BAB /* PublicResources */; };
 		960FFDB5223D8A40001750E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 960FFDB4223D8A40001750E8 /* Assets.xcassets */; };
 		960FFDB6223D8A40001750E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 960FFDB4223D8A40001750E8 /* Assets.xcassets */; };
@@ -70,6 +67,9 @@
 		E6E73A7F2246D0BC003CC970 /* storm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A7D2246D0BC003CC970 /* storm.mp3 */; };
 		E6E73A812247A931003CC970 /* Hints.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A802247A931003CC970 /* Hints.plist */; };
 		E6E73A822247A931003CC970 /* Hints.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A802247A931003CC970 /* Hints.plist */; };
+		E6E73A852247E345003CC970 /* TheLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A832247E345003CC970 /* TheLaunch.swift */; };
+		E6E73A862247E345003CC970 /* TheMission.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A842247E345003CC970 /* TheMission.swift */; };
+		E6E73A882247E352003CC970 /* TheEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A872247E352003CC970 /* TheEnd.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -162,12 +162,9 @@
 		5EF2F9AB2054BBF300191409 /* libBook_Sources.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBook_Sources.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF2F9AD2054BBF300191409 /* LiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveViewController.swift; sourceTree = "<group>"; };
 		5EF2F9B62054E6F900191409 /* Chapters */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Chapters; sourceTree = "<group>"; };
-		960FFD74223A67E8001750E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LiveView_1_1.storyboard; sourceTree = "<group>"; };
-		960FFD76223A67E8001750E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LiveView_1_2.storyboard; sourceTree = "<group>"; };
-		960FFD78223A67E8001750E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LiveView_1_3.storyboard; sourceTree = "<group>"; };
-		960FFD83223A77DD001750E8 /* LiveViewController_1_1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveViewController_1_1.swift; sourceTree = "<group>"; };
-		960FFD85223A7898001750E8 /* LiveViewController_1_2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveViewController_1_2.swift; sourceTree = "<group>"; };
-		960FFD87223A789F001750E8 /* LiveViewController_1_3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveViewController_1_3.swift; sourceTree = "<group>"; };
+		960FFD74223A67E8001750E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TheLaunch.storyboard; sourceTree = "<group>"; };
+		960FFD76223A67E8001750E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TheMission.storyboard; sourceTree = "<group>"; };
+		960FFD78223A67E8001750E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TheEnd.storyboard; sourceTree = "<group>"; };
 		960FFDB4223D8A40001750E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9686CA0122391AE600E56BAB /* PublicResources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PublicResources; sourceTree = "<group>"; };
 		E64E27E522406C70004B1ED0 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
@@ -190,6 +187,9 @@
 		E6E73A7A22468DDD003CC970 /* GameConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConfiguration.swift; sourceTree = "<group>"; };
 		E6E73A7D2246D0BC003CC970 /* storm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = storm.mp3; sourceTree = "<group>"; };
 		E6E73A802247A931003CC970 /* Hints.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Hints.plist; sourceTree = "<group>"; };
+		E6E73A832247E345003CC970 /* TheLaunch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheLaunch.swift; sourceTree = "<group>"; };
+		E6E73A842247E345003CC970 /* TheMission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheMission.swift; sourceTree = "<group>"; };
+		E6E73A872247E352003CC970 /* TheEnd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheEnd.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,9 +330,9 @@
 			children = (
 				5EF2F97E2054B6E400191409 /* ManifestPlist.strings */,
 				5E086DCC2051DDAE004D8D25 /* LiveView.storyboard */,
-				960FFD73223A67E8001750E8 /* LiveView_1_1.storyboard */,
-				960FFD75223A67E8001750E8 /* LiveView_1_2.storyboard */,
-				960FFD77223A67E8001750E8 /* LiveView_1_3.storyboard */,
+				960FFD73223A67E8001750E8 /* TheLaunch.storyboard */,
+				960FFD75223A67E8001750E8 /* TheMission.storyboard */,
+				960FFD77223A67E8001750E8 /* TheEnd.storyboard */,
 			);
 			path = PrivateResources;
 			sourceTree = "<group>";
@@ -346,9 +346,9 @@
 				E6E538DA224401700074A197 /* EndGameScene.swift */,
 				5E3196F22061DEA40077BBD7 /* LiveViewSupport.swift */,
 				5EF2F9AD2054BBF300191409 /* LiveViewController.swift */,
-				960FFD83223A77DD001750E8 /* LiveViewController_1_1.swift */,
-				960FFD85223A7898001750E8 /* LiveViewController_1_2.swift */,
-				960FFD87223A789F001750E8 /* LiveViewController_1_3.swift */,
+				E6E73A832247E345003CC970 /* TheLaunch.swift */,
+				E6E73A872247E352003CC970 /* TheEnd.swift */,
+				E6E73A842247E345003CC970 /* TheMission.swift */,
 				E6E73A7A22468DDD003CC970 /* GameConfiguration.swift */,
 			);
 			path = Sources;
@@ -495,7 +495,7 @@
 			files = (
 				E6E538E522451C320074A197 /* crash.mp3 in Resources */,
 				E6E538DF22441E7A0074A197 /* EndGameScene.sks in Resources */,
-				960FFD8A223A7A1B001750E8 /* LiveView_1_1.storyboard in Resources */,
+				960FFD8A223A7A1B001750E8 /* TheLaunch.storyboard in Resources */,
 				E6E73A6322467AAB003CC970 /* incomingTransmission.mp3 in Resources */,
 				E6E538ED22452E730074A197 /* Glossary.plist in Resources */,
 				E64E27E722406C70004B1ED0 /* spark.png in Resources */,
@@ -505,11 +505,11 @@
 				5E086DCA2051DDAE004D8D25 /* LiveView.storyboard in Resources */,
 				E6E73A812247A931003CC970 /* Hints.plist in Resources */,
 				E6E73A7E2246D0BC003CC970 /* storm.mp3 in Resources */,
-				960FFD7A223A67E8001750E8 /* LiveView_1_2.storyboard in Resources */,
+				960FFD7A223A67E8001750E8 /* TheMission.storyboard in Resources */,
 				9686CA0222391AE600E56BAB /* PublicResources in Resources */,
 				E64E27E822406C70004B1ED0 /* Reactor.scnp in Resources */,
 				E6C441742245B52700BC88F2 /* StartGameScene.sks in Resources */,
-				960FFD7B223A67E8001750E8 /* LiveView_1_3.storyboard in Resources */,
+				960FFD7B223A67E8001750E8 /* TheEnd.storyboard in Resources */,
 				E6E73A6622467C28003CC970 /* charge.mp3 in Resources */,
 				E6E73A6C22467FFE003CC970 /* crashThud.mp3 in Resources */,
 				960FFDB5223D8A40001750E8 /* Assets.xcassets in Resources */,
@@ -521,7 +521,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				960FFD7E223A6C00001750E8 /* LiveView_1_3.storyboard in Resources */,
+				960FFD7E223A6C00001750E8 /* TheEnd.storyboard in Resources */,
 				E6E73A822247A931003CC970 /* Hints.plist in Resources */,
 				E6E73A77224684DB003CC970 /* SandStorm.sks in Resources */,
 				E6E73A6D22467FFE003CC970 /* crashThud.mp3 in Resources */,
@@ -533,9 +533,9 @@
 				5EA2E3CA2056F35B00416A35 /* LiveViewTestAppLaunchScreen.storyboard in Resources */,
 				E6E538DE224402570074A197 /* EndGameScene.sks in Resources */,
 				E6E73A7F2246D0BC003CC970 /* storm.mp3 in Resources */,
-				960FFD89223A7A1B001750E8 /* LiveView_1_1.storyboard in Resources */,
+				960FFD89223A7A1B001750E8 /* TheLaunch.storyboard in Resources */,
 				E6E73A6A22467E49003CC970 /* ambient.mp3 in Resources */,
-				960FFD7D223A6BFD001750E8 /* LiveView_1_2.storyboard in Resources */,
+				960FFD7D223A6BFD001750E8 /* TheMission.storyboard in Resources */,
 				960FFDB6223D8A40001750E8 /* Assets.xcassets in Resources */,
 				960FFD6A22394F56001750E8 /* LiveView.storyboard in Resources */,
 				960FFDB3223D8986001750E8 /* PublicResources in Resources */,
@@ -581,15 +581,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6E73A882247E352003CC970 /* TheEnd.swift in Sources */,
+				E6E73A852247E345003CC970 /* TheLaunch.swift in Sources */,
 				E66161C52241993200AE107E /* GameScene.swift in Sources */,
 				5E3196F32061DEA40077BBD7 /* LiveViewSupport.swift in Sources */,
 				5EF2F9AE2054BBF300191409 /* LiveViewController.swift in Sources */,
 				E6E538DB224401700074A197 /* EndGameScene.swift in Sources */,
-				960FFD84223A77DD001750E8 /* LiveViewController_1_1.swift in Sources */,
+				E6E73A862247E345003CC970 /* TheMission.swift in Sources */,
 				E6E538E9224526D20074A197 /* StartGameScene.swift in Sources */,
 				E6E73A61224679AD003CC970 /* Sounds.swift in Sources */,
-				960FFD86223A7898001750E8 /* LiveViewController_1_2.swift in Sources */,
-				960FFD88223A789F001750E8 /* LiveViewController_1_3.swift in Sources */,
 				E6E73A7C22468F95003CC970 /* GameConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -639,28 +639,28 @@
 			name = ManifestPlist.strings;
 			sourceTree = "<group>";
 		};
-		960FFD73223A67E8001750E8 /* LiveView_1_1.storyboard */ = {
+		960FFD73223A67E8001750E8 /* TheLaunch.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				960FFD74223A67E8001750E8 /* Base */,
 			);
-			name = LiveView_1_1.storyboard;
+			name = TheLaunch.storyboard;
 			sourceTree = "<group>";
 		};
-		960FFD75223A67E8001750E8 /* LiveView_1_2.storyboard */ = {
+		960FFD75223A67E8001750E8 /* TheMission.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				960FFD76223A67E8001750E8 /* Base */,
 			);
-			name = LiveView_1_2.storyboard;
+			name = TheMission.storyboard;
 			sourceTree = "<group>";
 		};
-		960FFD77223A67E8001750E8 /* LiveView_1_3.storyboard */ = {
+		960FFD77223A67E8001750E8 /* TheEnd.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				960FFD78223A67E8001750E8 /* Base */,
 			);
-			name = LiveView_1_3.storyboard;
+			name = TheEnd.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

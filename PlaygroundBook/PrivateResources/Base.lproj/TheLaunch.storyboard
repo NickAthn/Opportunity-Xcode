@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Live View Controller11-->
+        <!--The Launch-->
         <scene sceneID="HVS-ZB-wEb">
             <objects>
-                <viewController id="fcD-sv-Xiz" customClass="LiveViewController_1_1" customModule="Book_Sources" sceneMemberID="viewController">
+                <viewController id="fcD-sv-Xiz" customClass="TheLaunch" customModule="Book_Sources" sceneMemberID="viewController">
                     <sceneKitView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="yOc-Vb-AT7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Live View Controller13-->
+        <!--The End-->
         <scene sceneID="HVS-ZB-wEb">
             <objects>
-                <viewController id="fcD-sv-Xiz" customClass="LiveViewController_1_3" customModule="Book_Sources" sceneMemberID="viewController">
+                <viewController id="fcD-sv-Xiz" customClass="TheEnd" customModule="Book_Sources" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Rh2-0a-zph">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -36,7 +36,7 @@ round-trip min/avg/max/stddev = 0/0/0/0 ms
 
 ➜  ~ </mutableString>
                                 <color key="textColor" red="0.45009386540000001" green="0.98132258650000004" blue="0.4743030667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>

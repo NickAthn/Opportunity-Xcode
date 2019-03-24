@@ -141,6 +141,9 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         rover.run(animation, completion: {
             self.isHit = false
         })
+        if energy - 10 <= 0 {
+            endGame(state: .crashed)
+        }
         loseEnergyWith(amount: 10)
         self.run(SKAction.playSoundFileNamed(Sounds.crash, waitForCompletion: false))
         rock.removeFromParent()
@@ -235,7 +238,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         transmissionLabel.text = text
         transmissionLabel.horizontalAlignmentMode = .left
         transmissionLabel.verticalAlignmentMode = .top
-        transmissionLabel.fontName = Game.FontNames.helveticaNeue.bold//"AvenirNext-Regular"
+        transmissionLabel.fontName = Game.FontNames.terminalInterface
         
         transmissionLabel.fontColor = #colorLiteral(red: 0.4500938654, green: 0.9813225865, blue: 0.4743030667, alpha: 1)
         if #available(iOS 11.0, *) {transmissionLabel.numberOfLines = 0} else {}

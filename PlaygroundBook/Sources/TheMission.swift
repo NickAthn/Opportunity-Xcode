@@ -11,7 +11,7 @@ import GameplayKit
 import PlaygroundSupport
 
 
-public class LiveViewController_1_2: LiveViewController, GameViewController{
+public class TheMission: LiveViewController, GameViewController{
     var screenWidth: CGFloat!
     var screenHeight: CGFloat!
     var isAccessible = false

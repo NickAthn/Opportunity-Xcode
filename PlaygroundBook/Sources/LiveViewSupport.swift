@@ -8,36 +8,23 @@
 import UIKit
 import PlaygroundSupport
 
-/// Instantiates a new instance of a live view.
-///
-/// By default, this loads an instance of `LiveViewController` from `LiveView.storyboard`.
-public func instantiateLiveView(chapter: Int, page: Int) -> PlaygroundLiveViewable {
-    //return the LiveView for the specific chapter and page
-    let chapterAndPage = (chapter, page)
-    var storyBoardName = "LiveView"
-    switch chapterAndPage {
-        case let (x , y ) where x > 0 && y > 0:
-        storyBoardName = "LiveView" + "_\(x)" + "_\(y)"
-
-        default:
-        storyBoardName = "LiveView"
-    }
-
+public func instantiateLiveView(name: String) -> PlaygroundLiveViewable {
+    let storyBoardName = name
     
     let storyboard = UIStoryboard(name: storyBoardName, bundle: nil)
-
+    
     guard let viewController = storyboard.instantiateInitialViewController() else {
         fatalError("\(storyBoardName).storyboard does not have an initial scene; please set one or update this function")
     }
-
+    
     guard let liveViewController = viewController as? LiveViewController else {
         fatalError("\(storyBoardName).storyboard's initial scene is not a LiveViewController; please either update the storyboard or this function")
     }
-
+    
     return liveViewController
 }
 
-// - MARK: Custom code from WWDC 2018 Session 413
+// WWDC 2018 S413 CODE
 
 public protocol PlaygroundValueConvertible {
     func asPlaygroundValue() -> PlaygroundValue

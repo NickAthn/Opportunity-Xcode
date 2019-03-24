@@ -10,9 +10,9 @@ import UIKit
 
 public struct Game {
     public struct FontNames {
-        struct helveticaNeue {
-            static let bold = "HelveticaNeue-Bold"
-        }
+        static let gameInterface = "HelveticaNeue-Bold"
+        static let terminalInterface = "Courier"
+        static let messageInterface = "HelveticaNeue-Bold"
     }
     
     public struct PositionZ {
