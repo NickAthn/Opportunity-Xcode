@@ -51,7 +51,7 @@ public class StartGameScene: SKScene {
         addChild(nextLabel)
 
         nextLabel.startTyping(0.01, completion: nil)
-        self.viewController?.startGame()
+        //self.viewController?.startGame()
     }
     public init(size: CGSize, viewController: GameViewController) {
         super.init(size: size)

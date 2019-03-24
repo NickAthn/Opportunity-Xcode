@@ -12,12 +12,6 @@ import Foundation
 //Use the call below to send a message with an object to the LiveView of this page. Import Foundation is required.
 //sendValue(.data(try NSKeyedArchiver.archivedData(withRootObject: /*YourObject*/, requiringSecureCoding: true)))
 
-//enum Boolean {
-//    case `true`
-//    case `false`
-//}
-
-
 //Give hints and final solution:
 //PlaygroundPage.current.assessmentStatus = .fail(
 //hints: [
@@ -42,15 +36,15 @@ func activateOpportunity() {
 var isAccessible = false
 //#-end-hidden-code
 /*:
- ### The Mission
+ # The Mission
 
- Opportunity also known as “Oppy” was launched into the space on July, 2003 and began its big 5 month and 18 days journay.
+ [Opportunity](glossary://Opportunity) also known as “Oppy” was launched into the space on July, 2003 and began its big 5 month and 18 days journay.
  
  At January, 2004 Oppy touched the surface of Mars in the Eagle crater and for the first time she opened her eyes.
  
  Now its your turn to take control of Oppy and finish the story….
  
- >If you have any visual impairments change the value below to true to enable accesibility mode. With accesibility mode all entities will have a big indication in the middles making the identification easier. (R = Rock) (E = Energy)
+ >If you have any visual impairments  you can change the value below to true to enable accesibility mode. With accesibility mode all entities will have a big indication in the middles making the identification of them easier. (R = Rock) (E = Energy)
  */
 //#-code-completion(everything, hide)
 //#-code-completion(literal, show, true)
@@ -59,12 +53,14 @@ isAccessible = /*#-editable-code*/false/*#-end-editable-code*/
  **Before you start** here are some information about your mission.
  **Your Objectives:**
  - Survive
- - Collect as many minerals and soil samples as roverly possible.
  - Avoid hiting rocks.
- - Don't let your energy drop below 0. Try catching the following Sun Orbs.
- 
+ - Example:
+    ![rock1](rock1.png)
+ - Don't let your energy drop below 0. Try catching as many Sun Orbs as roverly possible.
  - Example:
     ![sunOrb](sunOrb.png)
+ 
+ >The game lasts 2 minutes total
  
  **Activate Her!** [Skip to the end](@next)
 */

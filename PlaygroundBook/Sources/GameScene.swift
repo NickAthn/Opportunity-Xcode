@@ -67,7 +67,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     
     let gameTime = 120
     var gameSpeed: CGFloat = 15
-    var maxTime = 0.6
+    var maxTime = 0.5
     var minTime = 0.3
     public func startGame(){
         Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
@@ -167,7 +167,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         for touch in touches{
             if touch.tapCount > 1 {
                 print("fire")
-                viewController.startGame()
+                //viewController.startGame()
             }
             let touchLocation = touch.location(in: self)
             moveRover(to: touchLocation)
@@ -277,7 +277,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         let sequence = SKAction.sequence([SKAction.repeat(rotationSequence, count: 2), defaultRotation ])
         satellite.run(sequence)
     }
-    
     
     // MARK: - Setting up view
     func setUp(){
@@ -471,10 +470,8 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         energy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         energy.zPosition = Game.PositionZ.actors
 
-        let viewMaxX = (view?.frame.size.width ?? 0)/2
-
-        let maxLeftValue = Int(-(viewMaxX))
-        let maxRightValue = Int(viewMaxX)
+        let maxLeftValue = Int(self.frame.minX)
+        let maxRightValue = Int(self.frame.maxX)
         let randomPosition = GKRandomDistribution(lowestValue: maxLeftValue , highestValue: maxRightValue)
         let position = CGFloat(randomPosition.nextInt())
         energy.position = CGPoint(x: position, y: self.frame.size.height + energy.size.height)
@@ -498,10 +495,8 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         let rock = SKSpriteNode(imageNamed: imageNamed)
         rock.name = "rock"
         
-        let viewMaxX = (view?.frame.size.width ?? 0)/2
-        
-        let maxLeftValue = Int(-(viewMaxX))
-        let maxRightValue = Int(viewMaxX)
+        let maxLeftValue = Int(self.frame.minX)
+        let maxRightValue = Int(self.frame.maxX)
         let randomPosition = GKRandomDistribution(lowestValue: maxLeftValue , highestValue: maxRightValue)
         let position = CGFloat(randomPosition.nextInt())
         rock.position = CGPoint(x: position, y: self.frame.size.height + rock.size.height)
@@ -524,7 +519,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     }
     func addEnergy(){
         if energy + 8 > 100 {
-            energy = 100
+            energy = 103
         } else {
             energy += 8
         }

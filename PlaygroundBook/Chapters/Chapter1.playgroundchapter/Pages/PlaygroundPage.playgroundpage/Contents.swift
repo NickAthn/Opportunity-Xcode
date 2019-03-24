@@ -28,9 +28,10 @@ func showModel(_ show: Model){
     } catch {}
 }
 
+//Give hints and final solution:
 //#-end-hidden-code
 /*:
- ### The Launch
+ # The Launch
 Once upon a time there was a small little rover named [Opportunity](glossary://Opportunity). The rover was the child of a very special Agency called [NASA](glossary://NASA).
 
 At the time NASA like many other space agencies were eager to explore a planet known as [Mars](glossary://Mars) and unravel all of its secrets. The brilliant team of NASA created two twin rovers “[Opportunity](glossary://Opportunity)” and “[Spirit](glossary://Spirit)” with the goal to aid that mission and be sent far away from our earth to explore Mars.

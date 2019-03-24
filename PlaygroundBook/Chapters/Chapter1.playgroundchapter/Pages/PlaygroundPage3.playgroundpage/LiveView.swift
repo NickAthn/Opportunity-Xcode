@@ -8,5 +8,11 @@
 import UIKit
 import PlaygroundSupport
 
+
 // Instantiate a new instance of the live view from the book's auxiliary sources and pass it to PlaygroundSupport.
 PlaygroundPage.current.liveView = instantiateLiveView(chapter: 1, page: 3)
+
+////Give hints and final solution:
+//var hints = [
+//    NSLocalizedString("hey", comment: "Hint")
+//]
