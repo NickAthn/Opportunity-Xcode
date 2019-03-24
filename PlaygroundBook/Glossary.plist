@@ -8,13 +8,6 @@
 		<dict>
 			<key>Definition</key>
 			<string>The National Aeronautics and Space Administration (NASA, /ˈnæsə/) is an independent agency of the United States Federal Government responsible for the civilian space program, as well as aeronautics and aerospace research.</string>
-			<key>FirstUse</key>
-			<dict>
-				<key>PageReference</key>
-				<string>NASA/Issuing%20NASA</string>
-				<key>Title</key>
-				<string>NASA</string>
-			</dict>
 		</dict>
 		<key>Mars</key>
 		<dict>
@@ -31,10 +24,15 @@
 			<key>Definition</key>
 			<string>Opportunity, also known as MER-B (Mars Exploration Rover – B) or MER-1, and nicknamed &quot;Oppy&quot;, is a robotic rover that was active on Mars send by NASA</string>
 		</dict>
-		<key>EagleCrater</key>
+		<key>Eagle Crater</key>
 		<dict>
 			<key>Definition</key>
-			<string>Mars is the fourth planet from the Sun and the second-smallest planet in the Solar System after Mercury. </string>
+			<string>Eagle is a 22-metre long impact crater located on the Meridiani Planum extraterrestrial plain, situated within the Margaritifer Sinus quadrangle (MC-19) portion of the planet Mars. The Opportunity rover came to rest inside Eagle crater when it landed in 2004.</string>
+		</dict>
+		<key>Curiosity</key>
+		<dict>
+			<key>Definition</key>
+			<string>Curiosity is a car-sized rover designed to explore the crater Gale on Mars as part of NASA&apos;s Mars Science Laboratory mission (MSL).</string>
 		</dict>
 	</dict>
 </dict>

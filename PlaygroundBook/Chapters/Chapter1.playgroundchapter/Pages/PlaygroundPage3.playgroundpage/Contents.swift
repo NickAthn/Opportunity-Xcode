@@ -32,19 +32,19 @@ func pingOppy() {
 
 “Oppy, Oppy”
 
-Our beloved little [Oppy](glossary://Opportunity) was the rover to hit a world record, she was created to last 90 days but that wasnt the case. Oppy was hungry to live and explore and she did everything in her power to stay alive.
+Our beloved little [Oppy](glossary://Opportunity) was the rover that hit a world record. She was created to last 90 days but that wasnt the case. Oppy was hungry to live and explore and she did everything in her power to stay alive.
 
 She stayed operational for 15 years and travelled more than 45km(28miles)! Thats 60 times more than what she was created for.
 
-Sadly every story has to come to an end, so does this. Opportunity sent her last signal at June 10, when a heavy dust storm hit [Mars](glossary://Mars), she went to sleep hoping she will wait out the storm.
+Sadly, every story has to come to an end, as does this one. Opportunity sent her last signal on June 10, when a heavy dust storm hit [Mars](glossary://Mars). She went to sleep hoping she will wait out the storm.
 
 She never woke up again…
 
-Some say she was damaged by the storm, others belive she is covered in dust unable to wake up waiting for us to come and get her.
+Some say she was damaged by the storm. Others believe she is covered in dust, unable to wake up, waiting for us to come and get her.
  
 ***What does this story teaches us?***
 
-Never let anybody define you, keep fighting for what you want. **You define yourself, you find your purpose.**
+Never let anybody define you. Keep fighting for what you want. **You define yourself, you find your purpose.**
  
 */
 pingOppy()

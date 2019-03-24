@@ -21,7 +21,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eqU-7s-JYI">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Last login: Sat Mar 16 12:29:18 on ttys000
+                                <mutableString key="text">Last login: September 19, 2018 18:03:49 on ttys000
 ➜  ~ ping Opportunity
 PING Opportunity: 56 data bytes
 

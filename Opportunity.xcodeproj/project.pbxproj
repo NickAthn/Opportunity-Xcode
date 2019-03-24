@@ -65,8 +65,6 @@
 		E6E73A7C22468F95003CC970 /* GameConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A7A22468DDD003CC970 /* GameConfiguration.swift */; };
 		E6E73A7E2246D0BC003CC970 /* storm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A7D2246D0BC003CC970 /* storm.mp3 */; };
 		E6E73A7F2246D0BC003CC970 /* storm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A7D2246D0BC003CC970 /* storm.mp3 */; };
-		E6E73A812247A931003CC970 /* Hints.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A802247A931003CC970 /* Hints.plist */; };
-		E6E73A822247A931003CC970 /* Hints.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6E73A802247A931003CC970 /* Hints.plist */; };
 		E6E73A852247E345003CC970 /* TheLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A832247E345003CC970 /* TheLaunch.swift */; };
 		E6E73A862247E345003CC970 /* TheMission.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A842247E345003CC970 /* TheMission.swift */; };
 		E6E73A882247E352003CC970 /* TheEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E73A872247E352003CC970 /* TheEnd.swift */; };
@@ -186,7 +184,6 @@
 		E6E73A74224684DB003CC970 /* SandStorm.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SandStorm.sks; sourceTree = "<group>"; };
 		E6E73A7A22468DDD003CC970 /* GameConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConfiguration.swift; sourceTree = "<group>"; };
 		E6E73A7D2246D0BC003CC970 /* storm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = storm.mp3; sourceTree = "<group>"; };
-		E6E73A802247A931003CC970 /* Hints.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Hints.plist; sourceTree = "<group>"; };
 		E6E73A832247E345003CC970 /* TheLaunch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheLaunch.swift; sourceTree = "<group>"; };
 		E6E73A842247E345003CC970 /* TheMission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheMission.swift; sourceTree = "<group>"; };
 		E6E73A872247E352003CC970 /* TheEnd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TheEnd.swift; sourceTree = "<group>"; };
@@ -224,7 +221,6 @@
 		5E086DC12051C5A7004D8D25 /* PlaygroundBook */ = {
 			isa = PBXGroup;
 			children = (
-				E6E73A802247A931003CC970 /* Hints.plist */,
 				E6E538EB22452C570074A197 /* Glossary.plist */,
 				E66161B22241949F00AE107E /* Game */,
 				960FFDB4223D8A40001750E8 /* Assets.xcassets */,
@@ -503,7 +499,6 @@
 				E6B2EFD2223EFE2D00687B88 /* art.scnassets in Resources */,
 				5EF2F97C2054B6E400191409 /* ManifestPlist.strings in Resources */,
 				5E086DCA2051DDAE004D8D25 /* LiveView.storyboard in Resources */,
-				E6E73A812247A931003CC970 /* Hints.plist in Resources */,
 				E6E73A7E2246D0BC003CC970 /* storm.mp3 in Resources */,
 				960FFD7A223A67E8001750E8 /* TheMission.storyboard in Resources */,
 				9686CA0222391AE600E56BAB /* PublicResources in Resources */,
@@ -522,7 +517,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				960FFD7E223A6C00001750E8 /* TheEnd.storyboard in Resources */,
-				E6E73A822247A931003CC970 /* Hints.plist in Resources */,
 				E6E73A77224684DB003CC970 /* SandStorm.sks in Resources */,
 				E6E73A6D22467FFE003CC970 /* crashThud.mp3 in Resources */,
 				E6E538EC22452C570074A197 /* Glossary.plist in Resources */,

@@ -21,7 +21,7 @@ public class StartGameScene: SKScene {
     
     public override func didMove(to view: SKView) {
         //view.presentScene(EndGameScene(fileNamed: "EndGameScene", state: .won))
-        let text = "Last login: Thu Mar 21 18:03:49 on ttys000 \n➜  ~"
+        let text = "Last login: January 25, 2004 18:03:49 on ttys000 \n➜  ~"
         label.verticalAlignmentMode = .top
         label.horizontalAlignmentMode = .left
         label.zPosition = 10
@@ -52,6 +52,7 @@ public class StartGameScene: SKScene {
         addChild(nextLabel)
 
         nextLabel.startTyping(0.01, completion: nil)
+        connect()
     }
     public init(size: CGSize, viewController: GameViewController) {
         super.init(size: size)
