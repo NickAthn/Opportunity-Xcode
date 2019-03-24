@@ -42,7 +42,7 @@ func activateOpportunity() {
 
  [Opportunity](glossary://Opportunity) also known as “Oppy” was launched into space on July, 2003 and began its big 5 month and 18 days journey.
  
- On January, 2004 Oppy touched the surface of Mars in the [Eagle Crater](glossary://Eagle Crater) and for the first time she opened her eyes.
+ On January, 2004 Oppy touched the surface of Mars in the [Eagle Crater](glossary://EagleCrater) and for the first time she opened her eyes.
  
  Now its your turn to take control of Oppy and finish the story….
  
@@ -52,7 +52,7 @@ func activateOpportunity() {
 //#-code-completion(literal, show, true)
 isAccessible = /*#-editable-code*/false/*#-end-editable-code*/
 /*:
- > You can change the game time below for a faster experience. Recommended
+ > You can change the game time below for a faster experience. Recommended value is between 100 seconds - 120 seconds.
  */
 gameTime = /*#-editable-code*/120/*#-end-editable-code*/
 /*:

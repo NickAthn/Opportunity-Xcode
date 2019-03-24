@@ -12,12 +12,8 @@ import PlaygroundSupport
 public class TheEnd: LiveViewController {
     @IBOutlet weak var consoleTextView: UITextView!
     
-//    let text = ""
-    
     public override func viewDidLoad() {
         super.viewDidLoad()
-//         .setTextWithTypeAnimation(typedText: text, characterDelay:  10) //less delay is faster
-        //pingOppy()
     }
 
 

@@ -168,10 +168,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     }
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches{
-            if touch.tapCount > 1 {
-                print("fire")
-                //viewController.startGame()
-            }
             let touchLocation = touch.location(in: self)
             moveRover(to: touchLocation)
         }
@@ -291,20 +287,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         rover.position.x = 0
         rover.position.y = self.frame.minY + rover.size.height + 30
         
-//        let lightNode = SKLightNode()
-//        lightNode.isEnabled = true
-//        lightNode.position.x = rover.position.x
-//        lightNode.position.y = -rover.position.y
-//
-//        lightNode.falloff = 0.5
-//        lightNode.lightColor = .white
-//        lightNode.ambientColor = .black
-//        background.lightingBitMask = 1
-//
-//        rover.addChild(lightNode)
-//
-//        //rover.addChild(lightNode)
-//
         let offsetX: CGFloat = rover.frame.size.width * rover.anchorPoint.x
         let offsetY: CGFloat = rover.frame.size.height * rover.anchorPoint.y
         
@@ -333,7 +315,6 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         
         rover.physicsBody = SKPhysicsBody(polygonFrom: path)
 
-//        rover.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: rover.size.width, height: rover.size.height))
         rover.physicsBody?.usesPreciseCollisionDetection = true
         rover.physicsBody?.isDynamic = true
         rover.physicsBody?.affectedByGravity = false
