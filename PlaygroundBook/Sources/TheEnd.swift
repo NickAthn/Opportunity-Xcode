@@ -22,34 +22,57 @@ public class TheEnd: LiveViewController {
 
 
     var isTyping = false
+    var isCalled = false
     public func pingOppy(){
         isTyping = true
-        var text = """
-PING Opportunity: 56 data bytes
-
-Request Timed Out.
-Request Timed Out.
-Request Timed Out.
-Request Timed Out.
-
---- Opportunity ping statistics ---
-4 packets transmitted, 0 packets received, 100.0% packet loss
-round-trip min/avg/max/stddev = 0/0/0/0 ms
-
-➜  ~
-"""
         consoleTextView.appendTextWithTypeAnimation(typedText: " ping Opportunity\n") {
-            self.consoleTextView.appendTextWithTypeAnimation(typedText: text, characterDelay: 0.5) {
-                self.isTyping = false
-                let bottom = NSMakeRange(self.consoleTextView.text.count - 1, 1)
-                self.consoleTextView.scrollRangeToVisible(bottom)
+            if !self.isCalled {
+                self.addText()
             }
         }
 }
+    func addText(){
+        isCalled = true
+        self.consoleTextView.text += "PING Opportunity: 56 data bytes\n\n"
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500) , execute: {
+            self.consoleTextView.text += "Request Timed Out. \n"
+            self.goToBottom()
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000) , execute: {
+            self.consoleTextView.text += "Request Timed Out. \n"
+            self.goToBottom()
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1500) , execute: {
+            self.consoleTextView.text += "Request Timed Out. \n"
+            self.goToBottom()
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(2000) , execute: {
+            self.consoleTextView.text += "Request Timed Out. \n\n"
+            self.goToBottom()
+        })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(2300), execute: {
+            self.consoleTextView.text += """
+            --- Opportunity ping statistics ---
+            4 packets transmitted, 0 packets received, 100.0% packet loss
+            round-trip min/avg/max/stddev = 0/0/0/0 ms
+            
+            ➜  ~
+            """
+            self.isTyping = false
+            self.isCalled = false
+            self.goToBottom()
+        })
+
+    }
+    
+    func goToBottom(){
+        let bottom = NSMakeRange(self.consoleTextView.text.count - 1, 1)
+        self.consoleTextView.scrollRangeToVisible(bottom)
+    }
     
     override public func receive(_ message: PlaygroundValue) {
-        //        Uncomment the following to be able to receive messages from the Contents.swift playground page. You will need to define the type of your incoming object and then perform any actions with it.
-        //
                 guard case .data(let messageData) = message else { return }
                 do { if let incomingObject = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(messageData) as? String {
                     if incomingObject == "ping" && isTyping == false{
@@ -82,3 +105,4 @@ extension UITextView {
         }
     }
 }
+

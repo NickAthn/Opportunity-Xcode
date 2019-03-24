@@ -25,15 +25,17 @@ import Foundation
 
 // Completion of user-entered code:
 //Use //#-code-completion syntax to allow only specified code to be entered by the user. (info here: https://developer.apple.com/documentation/swift_playgrounds/customizing_the_completions_in_the_shortcut_bar)
+var isAccessible = false
+var gameTime = 120
 
 func activateOpportunity() {
     var message = "startGame"
     if isAccessible {
         message += "A"
     }
+    do{try sendValue(.data(try NSKeyedArchiver.archivedData(withRootObject: gameTime, requiringSecureCoding: false)))} catch {}
     do{try sendValue(.data(try NSKeyedArchiver.archivedData(withRootObject: message, requiringSecureCoding: false)))} catch {}
 }
-var isAccessible = false
 //#-end-hidden-code
 /*:
  # The Mission
@@ -50,19 +52,21 @@ var isAccessible = false
 //#-code-completion(literal, show, true)
 isAccessible = /*#-editable-code*/false/*#-end-editable-code*/
 /*:
+ > You can change the game time below for a faster experiance. It is not advised to choose a value below 100 seconds.
+ */
+gameTime = /*#-editable-code*/120/*#-end-editable-code*/
+/*:
  **Before you start** here are some information about your mission.
  **Your Objectives:**
  - Survive
+ * Callout(Rock):
+ ![rock1](rock1.png)
  - Avoid hiting rocks.
- - Example:
-    ![rock1](rock1.png)
+ * Callout(Energy Orb):
+ ![sunOrb](sunOrb.png)
  - Don't let your energy drop below 0. Try catching as many Sun Orbs as roverly possible.
- - Example:
-    ![sunOrb](sunOrb.png)
- 
- >The game lasts 2 minutes total
- 
- **Activate Her!** [Skip to the end](@next)
+
+ **Activate Her!**
 */
 //#-code-completion(everything, hide)
 //#-code-completion(identifier, show, activateOpportunity())

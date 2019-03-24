@@ -65,7 +65,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     var currentTransmissions: [SKLabelNode] = []
     var satellite = SKSpriteNode()
     
-    let gameTime = 120
+    var gameTime = 120
     var gameSpeed: CGFloat = 15
     var maxTime = 0.5
     var minTime = 0.3
@@ -647,8 +647,9 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         }
     }
     
-    public init(size: CGSize, viewController: GameViewController) {
+    public init(size: CGSize, viewController: GameViewController, gameTime: Int) {
         self.viewController = viewController
+        self.gameTime = gameTime
         super.init(size: size)
     }
 

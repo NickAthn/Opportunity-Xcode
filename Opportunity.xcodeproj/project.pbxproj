@@ -347,8 +347,8 @@
 				5E3196F22061DEA40077BBD7 /* LiveViewSupport.swift */,
 				5EF2F9AD2054BBF300191409 /* LiveViewController.swift */,
 				E6E73A832247E345003CC970 /* TheLaunch.swift */,
-				E6E73A872247E352003CC970 /* TheEnd.swift */,
 				E6E73A842247E345003CC970 /* TheMission.swift */,
+				E6E73A872247E352003CC970 /* TheEnd.swift */,
 				E6E73A7A22468DDD003CC970 /* GameConfiguration.swift */,
 			);
 			path = Sources;

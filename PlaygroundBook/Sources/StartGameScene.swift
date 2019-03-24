@@ -17,6 +17,7 @@ public class StartGameScene: SKScene {
     let label = SKLabelNode()
     let nextLabel = SKLabelNode()
     var isAccessible = false
+    var time: String = "120"
     
     public override func didMove(to view: SKView) {
         //view.presentScene(EndGameScene(fileNamed: "EndGameScene", state: .won))
@@ -51,8 +52,6 @@ public class StartGameScene: SKScene {
         addChild(nextLabel)
 
         nextLabel.startTyping(0.01, completion: nil)
-        //self.viewController?.startGame()
-        connect()
     }
     public init(size: CGSize, viewController: GameViewController) {
         super.init(size: size)
@@ -75,7 +74,7 @@ public class StartGameScene: SKScene {
         lastLabel.fontSize = 15
         lastLabel.position.x = label.position.x
         lastLabel.position.y = nextLabel.position.y - 18
-        lastLabel.text = "Connecting...\nConnection Succesfull!\nAccesibilityMode: \(isAccessible)\nPowerOn: True\nPlanet: Mars\n➜  ~ Activate Opportunity\n...................................................................................................."
+        lastLabel.text = "Connecting...\nConnection Succesfull!\nAccesibilityMode: \(isAccessible)\nTime: \(time)\nPlanet: Mars\n➜  ~ Activate Opportunity\n...................................................................................................."
         self.addChild(lastLabel)
         lastLabel.startTyping(0.02, completion: {
             self.viewController?.startGame()

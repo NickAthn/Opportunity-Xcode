@@ -16,6 +16,7 @@ public class TheMission: LiveViewController, GameViewController{
     var screenHeight: CGFloat!
     var isAccessible = false
     var isPlaying = false
+    var gameTime = 120
     
    // let gameScene = GameScene(fileNamed: "GameScene")
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator){
@@ -49,9 +50,9 @@ public class TheMission: LiveViewController, GameViewController{
         //let gameView = SKView(frame: CGRect(x: 0, y: 0, width: 1050, height: 1472))
     }
     
-    public func startGame() {
+    public func startGame(){
         
-        let scene = GameScene(size: CGSize(width: screenWidth*2, height: screenHeight*2), viewController: self)
+        let scene = GameScene(size: CGSize(width: screenWidth*2, height: screenHeight*2), viewController: self,gameTime: gameTime)
         let skView = view as! SKView
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .aspectFit
@@ -70,6 +71,7 @@ public class TheMission: LiveViewController, GameViewController{
         let skView = view as! SKView
         let currentScene = skView.scene as? StartGameScene
         currentScene?.isAccessible = isAccessible
+        currentScene?.time = "\(gameTime) seconds"
         currentScene?.connect()
     }
     override public var shouldAutorotate: Bool {
@@ -103,6 +105,10 @@ public class TheMission: LiveViewController, GameViewController{
                 }
             }
             
+            
+            }
+            if let incomingObject = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(messageData) as? Int {
+                gameTime = incomingObject
             }
         } catch let error { fatalError("\(error) Unable to receive the message from the Playground page") }
     }
