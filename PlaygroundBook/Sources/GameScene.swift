@@ -65,7 +65,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     
     let gameTime = 120
     var gameSpeed: CGFloat = 15
-    var maxTime = 0.8
+    var maxTime = 0.6
     var minTime = 0.3
     public func startGame(){
         Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.startCountDown), userInfo: nil, repeats: true)
@@ -92,12 +92,12 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         startGame()
         Timer.scheduledTimer(timeInterval: Double.random(in: minTime...maxTime), target: self, selector: #selector(GameScene.traffic), userInfo: nil, repeats: true)
         Timer.scheduledTimer(timeInterval: TimeInterval(0.5), target: self, selector: #selector(GameScene.removeItems), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.loseEnergy), userInfo: nil, repeats: true)
+
         
         let deadTime = DispatchTime.now() + 1
         DispatchQueue.main.asyncAfter(deadline: deadTime) {
             Timer.scheduledTimer(timeInterval: TimeInterval(self.gameTime/15), target: self, selector: #selector(GameScene.incrementYear), userInfo: nil, repeats: true)
-            Timer.scheduledTimer(timeInterval: TimeInterval(1), target: self, selector: #selector(GameScene.loseEnergy), userInfo: nil, repeats: true)
-
         }
     }
     
@@ -139,6 +139,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         rover.run(animation, completion: {
             self.isHit = false
         })
+        loseEnergyWith(amount: 10)
         self.run(SKAction.playSoundFileNamed(Sounds.crash, waitForCompletion: false))
         rock.removeFromParent()
     }
@@ -179,7 +180,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         if location.x > (self.size.width)/2 || location.x < -((self.size.width)/2) {
         } else {
             let move = SKAction.moveTo(x: location.x, duration: distance/speed)
-            let moveUp = SKAction.moveTo(y: location.y, duration: distanceY/speed)
+            let moveUp = SKAction.moveTo(y: location.y, duration: distanceY/(speed-300))
             
 //             Move Player with steady speed of "speed" points
             if location.x - rover.position.x > 0 {
@@ -505,7 +506,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     }
     
     func loseEnergyWith(amount: Int){
-        if state != .freezed{
+        if state == .active{
             if energy - amount < 0 || energy == 0{ // END GAME
                 energy = 0
                 endGame(state: .crashed)
@@ -517,12 +518,12 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
 
     }
     @objc func loseEnergy(){
-        if state == .freezed{
-            let valueToDecrease = (100/(gameTime)) // GameTime/ THe amout of time the user will finish his power
+        if state == .active{
+            let valueToDecrease = 100/gameTime // GameTime/ THe amout of time the user will finish his power
             if energy - valueToDecrease < 0 || energy == 0{ // END GAME
                 energy = 0
             } else {
-                energy -= valueToDecrease
+                energy -= 3
             }
             energyLabel.text = "\(energy)%"
         }
@@ -604,6 +605,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(20), execute: {
                 self.view?.presentScene(endScene, transition: SKTransition.crossFade(withDuration: 1))
             })
+            
 
         } else if state == .crashed {
             self.dimScreen(in: 3)

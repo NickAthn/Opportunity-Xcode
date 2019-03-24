@@ -29,7 +29,7 @@ public class StartGameScene: SKScene {
         label.fontSize = 15
         if #available(iOS 11.0, *) {label.numberOfLines = 0} else {}
         if #available(iOS 11.0, *) {label.preferredMaxLayoutWidth = view.frame.maxX} else {}
-        //label.fontName = ".SFUIText-Thin"
+        label.fontName = ".SFUIText-Thin"
         label.fontColor = #colorLiteral(red: 0.4500938654, green: 0.9813225865, blue: 0.4743030667, alpha: 1)
         label.text = text
         addChild(label)
@@ -44,13 +44,13 @@ public class StartGameScene: SKScene {
         nextLabel.fontSize = 15
         if #available(iOS 11.0, *) {nextLabel.numberOfLines = 0} else {}
         if #available(iOS 11.0, *) {nextLabel.preferredMaxLayoutWidth = view.frame.maxX} else {}
-        //nextLabel.fontName =
+        nextLabel.fontName = ".SFUIText-Thin"
         nextLabel.fontColor = #colorLiteral(red: 0.4500938654, green: 0.9813225865, blue: 0.4743030667, alpha: 1)
         nextLabel.text = "connect -i Opportunity"
         addChild(nextLabel)
 
         nextLabel.startTyping(0.01, completion: nil)
-        self.viewController?.startGame()
+        //self.viewController?.startGame()
     }
     public init(size: CGSize, viewController: GameViewController) {
         super.init(size: size)

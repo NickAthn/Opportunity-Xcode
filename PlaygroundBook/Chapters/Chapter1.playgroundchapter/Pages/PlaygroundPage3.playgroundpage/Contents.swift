@@ -13,6 +13,12 @@ import Foundation
 //sendValue(.data(try NSKeyedArchiver.archivedData(withRootObject: /*YourObject*/, requiringSecureCoding: true)))
 
 
+func pingOppy() {
+    let ping = "ping"
+    do {
+        try sendValue(.data(try NSKeyedArchiver.archivedData(withRootObject: ping, requiringSecureCoding: true)))
+    } catch {}
+}
 
 //Give hints and final solution:
 //PlaygroundPage.current.assessmentStatus = .fail(
@@ -46,8 +52,6 @@ She never woke up again…
 
 Some say she was damaged by the storm, others belive she is covered in dust unable to wake up waiting for us to come and get her.
 */
-
-let str = "Hello, playground"
-
+pingOppy()
 
 
