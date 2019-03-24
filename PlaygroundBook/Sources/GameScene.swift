@@ -167,6 +167,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         for touch in touches{
             if touch.tapCount > 1 {
                 print("fire")
+                viewController.startGame()
             }
             let touchLocation = touch.location(in: self)
             moveRover(to: touchLocation)
@@ -576,7 +577,9 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
 
         sandStorm.zPosition = Game.PositionZ.enviromentalChanges
         sandStorm.position = CGPoint(x: 0, y: (view?.frame.maxY ?? 0) + 60)
-        sandStorm.particlePositionRange = CGVector(dx:((view?.frame.width)!)*2, dy: 0)
+        
+        let dx = self.frame.width*2
+        sandStorm.particlePositionRange = CGVector(dx:dx, dy: 0)
 //        sandStorm.emissionAngle = 0
         addChild(sandStorm)
 

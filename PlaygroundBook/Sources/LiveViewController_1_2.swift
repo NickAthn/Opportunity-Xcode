@@ -43,7 +43,9 @@ public class LiveViewController_1_2: LiveViewController, GameViewController{
         let skView = view as! SKView
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .fill
-        skView.presentScene(scene)
+        if !isPlaying {
+            skView.presentScene(scene)
+        }
         //let gameView = SKView(frame: CGRect(x: 0, y: 0, width: 1050, height: 1472))
     }
     
@@ -58,6 +60,8 @@ public class LiveViewController_1_2: LiveViewController, GameViewController{
         if !isPlaying {
             skView.presentScene(scene, transition: SKTransition.doorsOpenVertical(withDuration: 3))
         } else {
+            let currentView = skView.scene
+            currentView?.removeFromParent()
             skView.presentScene(scene, transition: SKTransition.fade(withDuration: 3))
         }
         isPlaying = true

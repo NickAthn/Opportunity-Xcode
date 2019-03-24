@@ -63,11 +63,11 @@ isAccessible = /*#-editable-code*/false/*#-end-editable-code*/
  - Avoid hiting rocks.
  - Don't let your energy drop below 0. Try catching the following Sun Orbs.
  
- - Sun Orb:
+ - Example:
     ![sunOrb](sunOrb.png)
  
  **Activate Her!** [Skip to the end](@next)
 */
 //#-code-completion(everything, hide)
 //#-code-completion(identifier, show, activateOpportunity())
-/*#-editable-code Tap to enter code*//*#-end-editable-code*/
+activateOpportunity()
