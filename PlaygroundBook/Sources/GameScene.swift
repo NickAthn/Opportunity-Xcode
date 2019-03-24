@@ -32,6 +32,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     func viewWillTransition(to size: CGSize) {
         
     }
+    var viewController: GameViewController
     
     // Background Image
     var background = SKSpriteNode(imageNamed: "marsMap")
@@ -44,6 +45,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     var centerPoint : CGFloat!
     
     var state: GameState = .freezed
+    var isAccesible = false
     
     var countDown = 1
     var stopEverything = true
@@ -286,6 +288,20 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         rover.position.x = 0
         rover.position.y = self.frame.minY + rover.size.height + 30
         
+//        let lightNode = SKLightNode()
+//        lightNode.isEnabled = true
+//        lightNode.position.x = rover.position.x
+//        lightNode.position.y = -rover.position.y
+//
+//        lightNode.falloff = 0.5
+//        lightNode.lightColor = .white
+//        lightNode.ambientColor = .black
+//        background.lightingBitMask = 1
+//
+//        rover.addChild(lightNode)
+//
+//        //rover.addChild(lightNode)
+//
         let offsetX: CGFloat = rover.frame.size.width * rover.anchorPoint.x
         let offsetY: CGFloat = rover.frame.size.height * rover.anchorPoint.y
         
@@ -444,7 +460,11 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     
     func addEnergyOrb(){
         let energy : SKSpriteNode!
-        energy = SKSpriteNode(imageNamed: "energyOrb")
+        var imageNamed = "energyOrb"
+        if isAccesible {
+            imageNamed += "A"
+        }
+        energy = SKSpriteNode(imageNamed: imageNamed)
         energy.name = "energyOrb"
 
         energy.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -464,13 +484,17 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         energy.physicsBody?.collisionBitMask = 0
         energy.physicsBody?.affectedByGravity = false
         energy.physicsBody?.usesPreciseCollisionDetection = true
-        
         energy.addGlow(radius: 60)
         addChild(energy)
     }
     func addRock(){
         possibleRocks = GKRandomSource.sharedRandom().arrayByShufflingObjects(in: possibleRocks) as! [String]
-        let rock = SKSpriteNode(imageNamed: possibleRocks.first!)
+        var imageNamed: String! = possibleRocks.first
+        if isAccesible {
+            imageNamed += "A"
+        }
+
+        let rock = SKSpriteNode(imageNamed: imageNamed)
         rock.name = "rock"
         
         let viewMaxX = (view?.frame.size.width ?? 0)/2
@@ -480,7 +504,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
         let randomPosition = GKRandomDistribution(lowestValue: maxLeftValue , highestValue: maxRightValue)
         let position = CGFloat(randomPosition.nextInt())
         rock.position = CGPoint(x: position, y: self.frame.size.height + rock.size.height)
- 
+        rock.lightingBitMask = 1
         rock.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         rock.zPosition = Game.PositionZ.actors
         let randomSizeIncrease = CGFloat(GKRandomDistribution(lowestValue: -30, highestValue: 50).nextInt())
@@ -597,6 +621,7 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
     func endGame(state: End){
         self.state = .ending
         let endScene = EndGameScene(fileNamed: "EndGameScene.sks", state: state)!
+        endScene.viewController = viewController
         if state == .won {
             addSandstorm(for: 35)
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(15), execute: {
@@ -620,17 +645,16 @@ public class GameScene: SKScene, SKPhysicsContactDelegate, CanReceiveTransitionE
 
         }
     }
-
-}
-
-
-public func gameView() -> SKView {
-    let sceneView = SKView(frame: CGRect(x:0 , y:0, width: 1050, height: 1472))
     
-    let scene = GameScene(size: CGSize(width: 1050, height: 1472))
-    scene.scaleMode = .fill
-    sceneView.presentScene(scene)
-    return sceneView
+    public init(size: CGSize, viewController: GameViewController) {
+        self.viewController = viewController
+        super.init(size: size)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }
 
 public struct ColliderType {

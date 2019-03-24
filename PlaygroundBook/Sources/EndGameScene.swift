@@ -12,7 +12,7 @@ class EndGameScene: SKScene{
     var centerLabel = SKLabelNode()
     var button: SKNode! = nil
     var state: End!
-
+    var viewController: GameViewController!
     
     convenience init?(fileNamed: String, state: End) {
         self.init(fileNamed: fileNamed)
@@ -51,7 +51,7 @@ class EndGameScene: SKScene{
             buttonLabel.position.x = button.frame.midX
             buttonLabel.position.y = button.frame.midY //- buttonLabel.frame.size.height/2
             buttonLabel.fontSize = 20
-            buttonLabel.zPosition = 15
+            buttonLabel.zPosition = 9
             buttonLabel.color = .white
             buttonLabel.verticalAlignmentMode = .center
             buttonLabel.horizontalAlignmentMode = .center
@@ -72,7 +72,7 @@ class EndGameScene: SKScene{
         for touch in touches{
             let touchLocation = touch.location(in: self)
             if atPoint(touchLocation).name == "restart"{
-                
+                viewController.startGame()
             }
         }
     }

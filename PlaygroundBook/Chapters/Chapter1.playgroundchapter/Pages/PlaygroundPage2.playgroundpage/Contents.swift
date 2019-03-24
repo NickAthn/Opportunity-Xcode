@@ -33,10 +33,13 @@ import Foundation
 //Use //#-code-completion syntax to allow only specified code to be entered by the user. (info here: https://developer.apple.com/documentation/swift_playgrounds/customizing_the_completions_in_the_shortcut_bar)
 
 func activateOpportunity() {
-    let message = "startGame"
+    var message = "startGame"
+    if isAccessible {
+        message += "A"
+    }
     do{try sendValue(.data(try NSKeyedArchiver.archivedData(withRootObject: message, requiringSecureCoding: false)))} catch {}
 }
-var isAccesible = false
+var isAccessible = false
 //#-end-hidden-code
 /*:
  ### The Mission
@@ -51,7 +54,7 @@ var isAccesible = false
  */
 //#-code-completion(everything, hide)
 //#-code-completion(literal, show, true)
-isAccesible = /*#-editable-code*/false/*#-end-editable-code*/
+isAccessible = /*#-editable-code*/false/*#-end-editable-code*/
 /*:
  **Before you start** here are some information about your mission.
  **Your Objectives:**

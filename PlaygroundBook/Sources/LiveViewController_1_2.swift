@@ -14,7 +14,9 @@ import PlaygroundSupport
 public class LiveViewController_1_2: LiveViewController, GameViewController{
     var screenWidth: CGFloat!
     var screenHeight: CGFloat!
-
+    var isAccessible = false
+    var isPlaying = false
+    
    // let gameScene = GameScene(fileNamed: "GameScene")
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator){
         
@@ -46,15 +48,24 @@ public class LiveViewController_1_2: LiveViewController, GameViewController{
     }
     
     public func startGame() {
-        let scene = GameScene(size: CGSize(width: screenWidth*2, height: screenHeight*2))
+        
+        let scene = GameScene(size: CGSize(width: screenWidth*2, height: screenHeight*2), viewController: self)
         let skView = view as! SKView
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .aspectFit
-        skView.presentScene(scene, transition: SKTransition.doorsOpenVertical(withDuration: 3))
+        
+        scene.isAccesible = isAccessible
+        if !isPlaying {
+            skView.presentScene(scene, transition: SKTransition.doorsOpenVertical(withDuration: 3))
+        } else {
+            skView.presentScene(scene, transition: SKTransition.fade(withDuration: 3))
+        }
+        isPlaying = true
     }
     func connect() {
         let skView = view as! SKView
         let currentScene = skView.scene as? StartGameScene
+        currentScene?.isAccessible = isAccessible
         currentScene?.connect()
     }
     override public var shouldAutorotate: Bool {
@@ -73,7 +84,19 @@ public class LiveViewController_1_2: LiveViewController, GameViewController{
         guard case .data(let messageData) = message else { return }
         do { if let incomingObject = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(messageData) as? String {
             if incomingObject == "startGame" {
-                connect()
+                isAccessible = false
+                if isPlaying {
+                    startGame()
+                } else {
+                    connect()
+                }
+            } else if incomingObject == "startGameA"{
+                isAccessible = true
+                if isPlaying {
+                    startGame()
+                } else {
+                    connect()
+                }
             }
             
             }
