@@ -2,4 +2,4 @@
 
 ## Overview ##
 
-Welcome to my Playground Book Xcode project! This Xcode project is made for the WWDC19 scholarships. It tells the story of the very famous rover "Opportunity". No spoilers though. Just try it! 🛰
+Welcome to my Playground Book Xcode project! This Xcode project was made in 5 days for the WWDC19 scholarship. It tells the story of the very famous rover "Opportunity", no spoilers though. Just try it! 🛰 
